@@ -204,6 +204,30 @@
         .contact-item { display: flex; align-items: center; gap: 10px; font-size: 1.2rem; }
         .contact-item i { color: var(--accent-color); }
 
+        /* --- Mobile Menu Toggle Button --- */
+        .menu-toggle {
+          display: none;
+          width: 44px;
+          height: 44px;
+          border: 1px solid rgba(255,255,255,0.12);
+          background: rgba(30,30,30,0.6);
+          border-radius: 12px;
+          cursor: pointer;
+          padding: 10px;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+        }
+
+        .menu-toggle span {
+          display: block;
+          height: 2px;
+          width: 20px;
+          background: #fff;
+          border-radius: 2px;
+          transition: 0.25s;
+        }
+        
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2rem; }
@@ -211,8 +235,42 @@
             .bento-grid { grid-template-columns: 1fr; }
             .box-1, .box-2, .box-3, .box-4, .box-5 { grid-column: span 1; }
             .box-5 { flex-direction: column; text-align: left; align-items: flex-start; }
-            .menu { display: none; } /* Mobile Menu Toggle not implemented for simplicity */
+            /* ✅ แสดงปุ่ม hamburger */
+
+            /* ✅ แสดงปุ่ม hamburger */
+              .menu-toggle { display: inline-flex; }
+            
+              /* ✅ เมนูมือถือ: ซ่อนก่อน แล้วค่อยเปิดด้วย class .open */
+              .menu {
+                display: none;
+                position: absolute;
+                top: 70px;               /* ใต้ navbar */
+                left: 20px;
+                right: 20px;
+                background: rgba(20,20,20,0.95);
+                border: 1px solid rgba(255,255,255,0.08);
+                border-radius: 16px;
+                padding: 14px;
+                flex-direction: column;
+                gap: 12px;
+                z-index: 1200;
+                backdrop-filter: blur(10px);
+              }
+            
+              .menu.open { display: flex; }
+            
+              .menu a {
+                padding: 12px 12px;
+                border-radius: 12px;
+                background: rgba(255,255,255,0.03);
+              }
+            
+              .menu a:active { transform: scale(0.99); }
+            }
         }
+
+        
+
     </style>
 </head>
 <body>
@@ -399,6 +457,38 @@
         &copy; 2025 Real Smart Home. All Rights Reserved.
     </footer>
 
+    <script>
+      const toggleBtn = document.getElementById('menuToggle');
+      const menu = document.getElementById('mainMenu');
+    
+      function closeMenu() {
+        menu.classList.remove('open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      }
+    
+      toggleBtn.addEventListener('click', () => {
+        const isOpen = menu.classList.toggle('open');
+        toggleBtn.setAttribute('aria-expanded', String(isOpen));
+      });
+    
+      // ✅ กดลิงก์ในเมนูแล้วปิดเมนูอัตโนมัติ
+      menu.querySelectorAll('a').forEach(a => {
+        a.addEventListener('click', () => closeMenu());
+      });
+    
+      // ✅ แตะพื้นที่นอกเมนูแล้วปิด
+      document.addEventListener('click', (e) => {
+        const clickedInside = menu.contains(e.target) || toggleBtn.contains(e.target);
+        if (!clickedInside) closeMenu();
+      });
+    
+      // ✅ ถ้าหมุนจอ/ขยายจอออกจากมือถือ ให้ปิดสถานะ open กันค้าง
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) closeMenu();
+      });
+    </script>
+
 </body>
 
 </html>
+
