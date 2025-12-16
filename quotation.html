@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ประเมินราคา - Real Smart Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #121212;
+            --panel-bg: #1e1e1e;
+            --accent-color: #00d2ff;
+            --text-color: #ffffff;
+            --border-color: rgba(255,255,255,0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            height: 100vh;
+            overflow: hidden; /* ซ่อน Scrollbar หลัก เพื่อจัดการ Scroll แยกส่วน */
+        }
+
+        /* Header Bar */
+        nav {
+            height: 60px;
+            background: rgba(30,30,30,0.9);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            justify-content: space-between;
+        }
+
+        nav a { color: #aaa; text-decoration: none; font-size: 0.9rem; }
+        nav h1 { font-size: 1.2rem; color: var(--accent-color); }
+
+        /* Main Layout (2 Columns) */
+        .main-wrapper {
+            display: flex;
+            height: calc(100vh - 60px); /* ความสูงเต็มลบ Header */
+        }
+
+        /* --- Left: Product Grid --- */
+        .product-section {
+            flex: 2; /* กินพื้นที่ 2 ส่วน */
+            padding: 20px;
+            overflow-y: auto; /* เลื่อนเฉพาะส่วนนี้ได้ */
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* จัดเรียงอัตโนมัติ */
+            gap: 15px;
+        }
+
+        .product-card {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: 0.2s;
+        }
+
+        .product-card:hover { border-color: var(--accent-color); transform: translateY(-3px); }
+
+        .product-card h3 { font-size: 1rem; margin-bottom: 5px; height: 40px; overflow: hidden; }
+        .product-price { color: var(--accent-color); font-weight: 600; margin-bottom: 15px; }
+
+        .qty-control {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #2a2a2a;
+            border-radius: 20px;
+            padding: 2px;
+        }
+
+        .btn-qty {
+            width: 30px; height: 30px;
+            border-radius: 50%; border: none;
+            background: #444; color: #fff;
+            cursor: pointer; font-weight: bold;
+        }
+        .btn-qty:hover { background: var(--accent-color); color: #000; }
+        .qty-val { font-weight: bold; width: 30px; text-align: center; }
+
+        /* --- Right: Quotation Paper --- */
+        .quotation-section {
+            flex: 1; /* กินพื้นที่ 1 ส่วน */
+            background: #f4f4f4; /* สีขาวกระดาษ */
+            color: #333; /* ตัวหนังสือสีเข้ม */
+            padding: 30px;
+            overflow-y: auto;
+            border-left: 5px solid var(--accent-color);
+            display: flex;
+            flex-direction: column;
+            min-width: 350px;
+        }
+
+        /* Paper Design */
+        .paper {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .q-header {
+            text-align: center;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+        .q-header h2 { color: #000; font-size: 1.4rem; margin-bottom: 5px; }
+        .q-contact { font-size: 0.85rem; color: #555; line-height: 1.4; }
+
+        .q-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        .q-table th { text-align: left; border-bottom: 1px solid #ddd; padding: 5px; color: #777; font-weight: 400; }
+        .q-table td { padding: 8px 5px; border-bottom: 1px solid #eee; vertical-align: top; }
+        .col-qty { text-align: center; width: 40px; }
+        .col-price { text-align: right; width: 80px; }
+        
+        .q-total-row { 
+            margin-top: auto; 
+            padding-top: 20px; 
+            border-top: 2px solid #000; 
+            display: flex; 
+            justify-content: space-between;
+            align-items: center;
+        }
+        .total-label { font-size: 1.1rem; font-weight: bold; }
+        .total-amount { font-size: 1.5rem; font-weight: bold; color: #d32f2f; }
+
+        .q-footer-note {
+            margin-top: 20px;
+            font-size: 0.75rem;
+            color: #666;
+            text-align: center;
+            background: #eee;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .btn-action-group { margin-top: 20px; display: grid; gap: 10px; }
+        .btn-save {
+            background: #000; color: #fff; border: none; padding: 12px;
+            border-radius: 5px; cursor: pointer; font-weight: bold; font-family: 'Prompt';
+        }
+        .btn-save:hover { background: #333; }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            body { height: auto; overflow: auto; }
+            .main-wrapper { flex-direction: column; height: auto; }
+            .quotation-section { min-width: auto; border-left: none; border-top: 5px solid var(--accent-color); }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html">← กลับหน้าหลัก</a>
+        <h1>ประเมินราคาระบบ (DIY)</h1>
+    </nav>
+
+    <div class="main-wrapper">
+        <div class="product-section">
+            <h2 style="margin-bottom: 20px; color: #888; font-weight: 400;">เลือกรายการอุปกรณ์ที่ต้องการ:</h2>
+            <div class="product-grid" id="grid-container">
+                </div>
+        </div>
+
+        <div class="quotation-section">
+            <div class="paper">
+                <div class="q-header">
+                    <h2>Real Smart Home</h2>
+                    <div class="q-contact">
+                        โทร: 083 0909 036<br>
+                        Line: @realsmarthome<br>
+                        <strong>ใบเสนอราคา (เบื้องต้น)</strong>
+                    </div>
+                </div>
+
+                <table class="q-table">
+                    <thead>
+                        <tr>
+                            <th>รายการ</th>
+                            <th class="col-qty">จำนวน</th>
+                            <th class="col-price">รวม (บาท)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="q-body">
+                        <tr><td colspan="3" style="text-align:center; padding:20px; color:#999;">- ยังไม่ได้เลือกรายการ -</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="q-total-row">
+                    <span class="total-label">ยอดรวมสุทธิ</span>
+                    <span class="total-amount" id="q-total">0</span>
+                </div>
+
+                <div class="q-footer-note">
+                    *หมายเหตุ: นี่เป็นราคาเบื้องต้น ยังไม่รวมค่าเซ็ตระบบและอุปกรณ์สิ้นเปลืองสำหรับงานติดตั้ง
+                </div>
+            </div>
+
+            <div class="btn-action-group">
+                <button class="btn-save" onclick="copyQuotation()">คัดลอกรายการส่ง LINE</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const products = [
+            { id: 1, name: "สวิตช์ไฟอัจฉริยะ (3 ช่อง)", price: 790 },
+            { id: 2, name: "สวิตช์ไฟอัจฉริยะ (2 ช่อง)", price: 740 },
+            { id: 3, name: "สวิตช์ไฟอัจฉริยะ (1 ช่อง)", price: 690 },
+            { id: 4, name: "เซ็นเซอร์ประตู/หน้าต่าง", price: 320 },
+            { id: 5, name: "เซ็นเซอร์จับความเคลื่อนไหว", price: 340 },
+            { id: 6, name: "ระบบไฟห้องน้ำอัตโนมัติ", price: 1290 },
+            { id: 7, name: "ระบบควบคุมแอร์", price: 550 },
+            { id: 8, name: "ชุดควบคุมประตูรั้วรีโมท", price: 1100 },
+            { id: 9, name: "กล้องวงจรปิด 64GB", price: 1890 }
+        ];
+
+        let cart = {};
+
+        // 1. สร้างสินค้าลง Grid
+        function renderGrid() {
+            const container = document.getElementById('grid-container');
+            let html = '';
+            products.forEach(p => {
+                const qty = cart[p.id] || 0;
+                html += `
+                <div class="product-card">
+                    <div>
+                        <h3>${p.name}</h3>
+                        <div class="product-price">฿${p.price.toLocaleString()}</div>
+                    </div>
+                    <div class="qty-control">
+                        <button class="btn-qty" onclick="updateQty(${p.id}, -1)">-</button>
+                        <span class="qty-val">${qty}</span>
+                        <button class="btn-qty" onclick="updateQty(${p.id}, 1)">+</button>
+                    </div>
+                </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        // 2. อัปเดตใบเสนอราคา
+        function renderQuotation() {
+            const tbody = document.getElementById('q-body');
+            let html = '';
+            let grandTotal = 0;
+            let hasItem = false;
+
+            products.forEach(p => {
+                const qty = cart[p.id] || 0;
+                if (qty > 0) {
+                    hasItem = true;
+                    const subtotal = p.price * qty;
+                    grandTotal += subtotal;
+                    html += `
+                    <tr>
+                        <td>
+                            ${p.name}<br>
+                            <span style="font-size:0.8em; color:#888;">@${p.price.toLocaleString()}</span>
+                        </td>
+                        <td class="col-qty">${qty}</td>
+                        <td class="col-price">${subtotal.toLocaleString()}</td>
+                    </tr>`;
+                }
+            });
+
+            if (!hasItem) {
+                html = `<tr><td colspan="3" style="text-align:center; padding:30px 0; color:#bbb;">เลือกอุปกรณ์ทางซ้าย<br>เพื่อเริ่มประเมินราคา</td></tr>`;
+            }
+
+            tbody.innerHTML = html;
+            document.getElementById('q-total').innerText = grandTotal.toLocaleString();
+        }
+
+        function updateQty(id, change) {
+            if (!cart[id]) cart[id] = 0;
+            cart[id] += change;
+            if (cart[id] < 0) cart[id] = 0;
+            
+            // Re-render เฉพาะตัวเลขใน Grid เพื่อ Performance ที่ดีขึ้น (แต่ในที่นี้ Re-render หมดเพื่อง่ายต่อโค้ด)
+            renderGrid();
+            renderQuotation();
+        }
+
+        function copyQuotation() {
+            let text = "📄 *ใบเสนอราคา (ประเมินเบื้องต้น)*\n";
+            text += "จาก: Real Smart Home\n-----------------------\n";
+            let total = 0;
+            let hasItem = false;
+
+            products.forEach(p => {
+                const qty = cart[p.id] || 0;
+                if (qty > 0) {
+                    hasItem = true;
+                    text += `${p.name} x ${qty} = ${(p.price * qty).toLocaleString()}\n`;
+                    total += p.price * qty;
+                }
+            });
+
+            if(!hasItem) { alert("กรุณาเลือกรายการก่อนครับ"); return; }
+
+            text += "-----------------------\n";
+            text += `💰 *ยอดรวมสุทธิ: ${total.toLocaleString()} บาท*\n`;
+            text += "(ราคานี้ยังไม่รวมค่าติดตั้งและอุปกรณ์สิ้นเปลือง)";
+            
+            navigator.clipboard.writeText(text).then(() => {
+                alert("คัดลอกรายการเรียบร้อย! สามารถกดวางใน LINE ได้เลยครับ");
+            });
+        }
+
+        // Init
+        renderGrid();
+        renderQuotation();
+
+    </script>
+</body>
+</html>

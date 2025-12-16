@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Smart Home - บ้านอัจฉริยะที่คิดแทนคุณ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- CSS Reset & Variables --- */
+        :root {
+            --bg-color: #0f0f0f;
+            --section-bg: #141414;
+            --card-bg: #1e1e1e;
+            --accent-color: #00d2ff;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --spacing-section: 100px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* --- Components --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: #000;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+        }
+        .btn-primary:hover {
+            background: #fff;
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.6);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+        .btn-outline:hover {
+            background: rgba(0, 210, 255, 0.1);
+            color: #fff;
+        }
+
+        h2.section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        h2.section-title span { color: var(--accent-color); }
+
+        /* --- 1. Navbar --- */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 20px 0;
+            background: rgba(15, 15, 15, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .nav-container {
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--accent-color); text-transform: uppercase; }
+        .menu { display: flex; gap: 30px; }
+        .menu a { color: var(--text-secondary); font-size: 0.95rem; }
+        .menu a:hover { color: var(--accent-color); }
+
+        /* --- 2. Hero Section --- */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+        .video-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; z-index: -2; opacity: 0.6;
+        }
+        /* Fallback background if video fails */
+        .bg-fallback {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://images.unsplash.com/photo-1558002038-1091a166111c?q=80&w=2000') center/cover;
+            z-index: -3;
+        }
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.9) 100%);
+            z-index: -1;
+        }
+        .hero-content { z-index: 1; max-width: 900px; padding: 20px; }
+        .hero-brand { font-size: 1.2rem; color: var(--accent-color); letter-spacing: 3px; margin-bottom: 10px; display: block; font-weight: 700; }
+        .hero h1 { font-size: 3.5rem; line-height: 1.2; margin-bottom: 20px; font-weight: 700; }
+        .hero p { font-size: 1.2rem; color: #ddd; margin-bottom: 40px; font-weight: 300; }
+        .hero-btns { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+
+        /* --- 3. About Us (Split Layout) --- */
+        .about { padding: var(--spacing-section) 0; background: var(--section-bg); }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .about-img { position: relative; }
+        .about-img img { width: 100%; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .about-text h3 { font-size: 2rem; margin-bottom: 20px; }
+        .about-text p { margin-bottom: 20px; color: var(--text-secondary); text-align: justify; }
+        .highlight-box {
+            border-left: 4px solid var(--accent-color);
+            padding-left: 20px; margin: 30px 0;
+            font-style: italic; color: #fff; font-size: 1.1rem;
+        }
+
+        /* --- 4. Philosophy (Checklist) --- */
+        .philosophy { padding: var(--spacing-section) 0; }
+        .philo-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px;
+        }
+        .philo-card {
+            background: var(--card-bg); padding: 30px; border-radius: 15px;
+            text-align: center; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s;
+        }
+        .philo-card:hover { transform: translateY(-10px); border-color: var(--accent-color); }
+        .philo-icon { font-size: 2rem; color: #00ff88; margin-bottom: 15px; }
+        .philo-card h4 { font-size: 1.2rem; margin-bottom: 10px; }
+        .philo-desc { font-size: 0.9rem; color: var(--text-secondary); }
+
+        /* --- 5. Key Strengths (Bento Grid) --- */
+        .strengths { padding: var(--spacing-section) 0; background: var(--section-bg); }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            auto-rows: minmax(250px, auto);
+        }
+        .bento-box {
+            background: var(--card-bg); border-radius: 20px; padding: 30px;
+            position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);
+            display: flex; flex-direction: column; justify-content: flex-end;
+        }
+        .bento-box:hover { border-color: var(--accent-color); }
+        
+        /* Grid Layout Config */
+        .box-1 { grid-column: span 2; background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 100%); }
+        .box-2 { grid-column: span 1; }
+        .box-3 { grid-column: span 1; }
+        .box-4 { grid-column: span 2; }
+        .box-5 { grid-column: span 3; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 30px; }
+
+        .bento-num { font-size: 4rem; opacity: 0.1; position: absolute; top: 10px; right: 20px; font-weight: 700; }
+        .bento-title { font-size: 1.5rem; margin-bottom: 10px; color: var(--accent-color); z-index: 2; }
+        .bento-desc { color: var(--text-secondary); font-size: 0.95rem; z-index: 2; }
+
+        /* --- 6. Who We Serve --- */
+        .target { padding: var(--spacing-section) 0; text-align: center; }
+        .target-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 50px; }
+        .target-card { padding: 20px; }
+        .target-icon { 
+            width: 80px; height: 80px; background: rgba(0, 210, 255, 0.1); 
+            border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; color: var(--accent-color);
+        }
+        .target-card h4 { font-size: 1.2rem; margin-bottom: 10px; }
+
+        /* --- 7. Closing --- */
+        .closing {
+            padding: 100px 0;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1513506003013-194a5d58f841?q=80&w=2000');
+            background-size: cover; background-position: center; background-attachment: fixed;
+            text-align: center;
+        }
+        .closing h2 { font-size: 2.5rem; margin-bottom: 20px; }
+        .contact-info { margin-top: 40px; display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
+        .contact-item { display: flex; align-items: center; gap: 10px; font-size: 1.2rem; }
+        .contact-item i { color: var(--accent-color); }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .about-grid { grid-template-columns: 1fr; }
+            .bento-grid { grid-template-columns: 1fr; }
+            .box-1, .box-2, .box-3, .box-4, .box-5 { grid-column: span 1; }
+            .box-5 { flex-direction: column; text-align: left; align-items: flex-start; }
+            .menu { display: none; } /* Mobile Menu Toggle not implemented for simplicity */
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container nav-container">
+            <div class="logo">Real Smart Home</div>
+            <ul class="menu">
+                <li><a href="#about">เกี่ยวกับเรา</a></li>
+                <li><a href="#strengths">จุดเด่น</a></li>
+                <li><a href="#services">บริการ</a></li>
+                <li><a href="quotation.html">ประเมินราคา</a></li>
+            </ul>
+            <a href="https://line.me/ti/p/@realsmarthome" class="btn btn-primary" style="padding: 8px 20px; font-size: 0.9rem;">Line: @realsmarthome</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="bg-fallback"></div>
+        <iframe class="video-bg" 
+            src="https://www.youtube.com/embed/LW-WolrFcBc?autoplay=1&mute=1&loop=1&playlist=LW-WolrFcBc&controls=0&showinfo=0&rel=0&iv_load_policy=3&fs=0" 
+            frameborder="0" allow="autoplay; encrypted-media">
+        </iframe>
+        <div class="hero-overlay"></div>
+        
+        <div class="hero-content">
+            <span class="hero-brand">REAL SMART HOME</span>
+            <h1>บ้านอัจฉริยะที่คิดแทนคุณ<br>ตั้งแต่ยังไม่ก้าวเข้าบ้าน</h1>
+            <p>ออกแบบและติดตั้งระบบ Smart Home แบบ “ใช้งานได้จริง”<br>ปลอดภัย สะดวก และเติบโตไปพร้อมไลฟ์สไตล์ของคุณ</p>
+            
+            <div class="hero-btns">
+                <a href="https://line.me/ti/p/@realsmarthome" class="btn btn-primary">👉 ปรึกษาฟรี / ประเมินหน้างาน</a>
+                <a href="#strengths" class="btn btn-outline">👉 ดูระบบที่เราให้บริการ</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-img">
+                    <img src="https://images.unsplash.com/photo-1507146153580-69a1fe6d8aa1?q=80&w=1000" alt="Smart Home Lifestyle">
+                </div>
+                <div class="about-text">
+                    <span style="color: var(--accent-color); font-weight: 700;">ABOUT US</span>
+                    <h3>มากกว่า “ผู้ติดตั้ง”<br>แต่คือ “ผู้ออกแบบการใช้ชีวิต”</h3>
+                    <p>Real Smart Home คือผู้เชี่ยวชาญด้านการออกแบบและติดตั้งระบบบ้านอัจฉริยะ ที่เชื่อว่า Smart Home ไม่ควรซับซ้อน และไม่ควรเป็นของเล่นราคาแพง</p>
+                    <div class="highlight-box">
+                        "ให้บ้านของคุณ ฉลาดขึ้น โดยไม่ทำให้ชีวิตยุ่งยากขึ้น"
+                    </div>
+                    <p>ไม่ว่าคุณจะเป็นเจ้าของบ้านใหม่, บ้านพักอาศัยระดับพรีเมียม, Pool Villa หรือโครงการอสังหาริมทรัพย์ เราสามารถออกแบบระบบที่เหมาะกับ งบ พฤติกรรม และอนาคตของบ้านคุณจริง ๆ</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="philosophy">
+        <div class="container">
+            <h2 class="section-title">แนวคิดของเรา <span>(Philosophy)</span></h2>
+            <p style="text-align: center; margin-bottom: 40px; color: #aaa;">Smart Home ที่ดีในนิยามของเรา ต้อง...</p>
+            
+            <div class="philo-grid">
+                <div class="philo-card">
+                    <i class="fa-solid fa-child-reaching philo-icon"></i>
+                    <h4>ใช้งานง่าย</h4>
+                    <p class="philo-desc">คนในบ้านทุกวัยใช้ได้ ไม่ต้องเรียนรู้เยอะ</p>
+                </div>
+                <div class="philo-card">
+                    <i class="fa-solid fa-shield-halved philo-icon"></i>
+                    <h4>ปลอดภัย</h4>
+                    <p class="philo-desc">ปกป้องบ้านและข้อมูล แม้คุณไม่อยู่</p>
+                </div>
+                <div class="philo-card">
+                    <i class="fa-solid fa-layer-group philo-icon"></i>
+                    <h4>ยืดหยุ่น</h4>
+                    <p class="philo-desc">ปรับเพิ่ม-ลดระบบได้ในอนาคต ไม่ผูกขาดแบรนด์</p>
+                </div>
+                <div class="philo-card">
+                    <i class="fa-solid fa-piggy-bank philo-icon"></i>
+                    <h4>คุ้มค่า</h4>
+                    <p class="philo-desc">ไม่ขายของแพงเพราะมันแพง แต่เลือกที่ "เหมาะ" กับคุณ</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="strengths" id="strengths">
+        <div class="container">
+            <h2 class="section-title">จุดเด่นของ <span>Real Smart Home</span></h2>
+            
+            <div class="bento-grid">
+                <div class="bento-box box-1">
+                    <div class="bento-num">01</div>
+                    <h3 class="bento-title"><i class="fa-solid fa-pen-ruler"></i> ออกแบบระบบ “ก่อนขาย”</h3>
+                    <p class="bento-desc">เราเริ่มจากการเข้าใจพฤติกรรมของคุณ แล้วจึงออกแบบระบบที่ตอบโจทย์ ไม่ยัดเยียดอุปกรณ์ที่คุณไม่จำเป็นต้องใช้ เพราะบ้านแต่ละหลังไม่เหมือนกัน</p>
+                </div>
+
+                <div class="bento-box box-2">
+                    <div class="bento-num">02</div>
+                    <h3 class="bento-title"><i class="fa-solid fa-mobile-screen"></i> แอปเดียวจบ</h3>
+                    <p class="bento-desc">ไฟ, แอร์, กล้อง, ประตู รวมอยู่ในแอปเดียว ไม่ต้องสลับไปมา รองรับทั้ง iOS และ Android</p>
+                </div>
+
+                <div class="bento-box box-3">
+                    <div class="bento-num">03</div>
+                    <h3 class="bento-title"><i class="fa-solid fa-network-wired"></i> เสถียร & ขยายได้</h3>
+                    <p class="bento-desc">ใช้เทคโนโลยี Zigbee ไม่ดึง Wi-Fi บ้าน เพิ่มอุปกรณ์ในอนาคตได้โดยไม่ต้องรื้อระบบเดิม</p>
+                </div>
+
+                <div class="bento-box box-4">
+                    <div class="bento-num">04</div>
+                    <h3 class="bento-title"><i class="fa-solid fa-helmet-safety"></i> ประสบการณ์หน้างานจริง</h3>
+                    <p class="bento-desc">ไม่ได้แค่รู้ทฤษฎี แต่ผ่านการติดตั้งบ้านจริงมาแล้ว ตั้งแต่บ้านจัดสรร จนถึง Pool Villa มั่นใจได้ว่าทุกระบบที่เราแนะนำ คือสิ่งที่ "ใช้ได้จริง"</p>
+                </div>
+
+                <div class="bento-box box-5">
+                    <div style="flex: 1;">
+                        <div class="bento-num" style="position: relative; opacity: 0.1; font-size: 3rem; margin-bottom: 10px;">05</div>
+                        <h3 class="bento-title"><i class="fa-solid fa-headset"></i> บริการหลังการขายดูแลต่อเนื่อง</h3>
+                        <p class="bento-desc">สอนการใช้งาน ปรับ Automation ตามพฤติกรรม และดูแลแก้ไขระบบเมื่อจำเป็น เพราะบ้านที่ดีต้องฉลาดขึ้นเรื่อยๆ</p>
+                    </div>
+                    <div>
+                        <a href="https://line.me/ti/p/@realsmarthome" class="btn btn-outline">สอบถามบริการ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="target">
+        <div class="container">
+            <h2 class="section-title">เราเหมาะกับ <span>ใคร?</span></h2>
+            <div class="target-grid">
+                <div class="target-card">
+                    <div class="target-icon"><i class="fa-solid fa-house-chimney-user"></i></div>
+                    <h4>เจ้าของบ้านใหม่</h4>
+                    <p class="text-secondary">ที่อยากเริ่ม Smart Home อย่างถูกทางตั้งแต่ต้น</p>
+                </div>
+                <div class="target-card">
+                    <div class="target-icon"><i class="fa-solid fa-star"></i></div>
+                    <h4>บ้านหรู / Pool Villa</h4>
+                    <p class="text-secondary">ที่ต้องการความพรีเมียม เสถียร และระบบ Automation ขั้นสูง</p>
+                </div>
+                <div class="target-card">
+                    <div class="target-icon"><i class="fa-solid fa-building"></i></div>
+                    <h4>โครงการอสังหาฯ</h4>
+                    <p class="text-secondary">ที่ต้องการเพิ่มมูลค่าและจุดขายให้ตัวบ้าน</p>
+                </div>
+                <div class="target-card">
+                    <div class="target-icon"><i class="fa-solid fa-users"></i></div>
+                    <h4>ครอบครัวยุคใหม่</h4>
+                    <p class="text-secondary">ที่ต้องการความปลอดภัยและความสบายใจให้คนในบ้าน</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="closing">
+        <div class="container">
+            <h2>Real Smart Home</h2>
+            <p style="font-size: 1.5rem; margin-bottom: 30px;">ไม่ใช่แค่บ้านที่สั่งงานด้วยมือถือ...<br>แต่คือบ้านที่ <span style="color: var(--accent-color);">เข้าใจคุณ</span> และ <span style="color: var(--accent-color);">ทำงานแทนคุณ</span> ทุกวัน</p>
+            
+            <a href="https://line.me/ti/p/@realsmarthome" class="btn btn-primary" style="padding: 15px 40px; font-size: 1.2rem;">📞 ปรึกษาฟรี / ประเมินราคา</a>
+
+            <div class="contact-info">
+                <div class="contact-item"><i class="fa-solid fa-phone"></i> 083 0909 036</div>
+                <div class="contact-item"><i class="fa-brands fa-line"></i> @realsmarthome</div>
+                <div class="contact-item"><i class="fa-solid fa-location-dot"></i> ออกแบบเฉพาะบ้านคุณ</div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="background: #000; padding: 20px; text-align: center; color: #555; font-size: 0.8rem;">
+        &copy; 2025 Real Smart Home. All Rights Reserved.
+    </footer>
+
+</body>
+</html>
