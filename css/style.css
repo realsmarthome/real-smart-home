@@ -341,3 +341,39 @@ nav {
 
   .menu a:active { transform: scale(0.99); }
 }
+
+/* ===== Mobile Nav Fix (iPhone overlap) ===== */
+
+/* ทำให้ nav สูงนิ่งและจัดแถวให้ชัด */
+nav { padding: 14px 0; }
+.nav-container { gap: 12px; }
+
+/* ปุ่ม Line ในแถบขวา: ซ่อนบนมือถือ เพื่อไม่ให้ทับกับเมนู */
+@media (max-width: 768px) {
+  .nav-line-btn { display: none !important; } /* class นี้เราจะใส่ให้ปุ่ม Line */
+}
+
+/* เมนูมือถือให้ลงมาใต้ nav จริง ๆ (ไม่เดา 70px) */
+@media (max-width: 768px) {
+  .menu {
+    top: calc(100% + 10px) !important; /* อยู่ใต้แถบ nav */
+    left: 12px !important;
+    right: 12px !important;
+    border-radius: 18px;
+    padding: 12px;
+  }
+
+  /* ลิงก์เมนูให้ดูเป็นปุ่มสวย ๆ */
+  .menu a {
+    display: block;
+    padding: 12px 14px;
+    border-radius: 14px;
+  }
+
+  /* ทำให้โลโก้ไม่กินพื้นที่เกิน */
+  .logo {
+    font-size: 1.2rem;
+    line-height: 1.1;
+  }
+}
+
