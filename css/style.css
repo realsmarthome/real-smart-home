@@ -388,5 +388,16 @@ nav { padding: 14px 0; }
   }
 }
 
+/* ===== Clean LINE text leftovers ===== */
+.nav-container li,
+.nav-container span {
+  list-style: none;
+}
+
+/* กันกรณีมี bullet หรือ dot แอบหลงมา */
+.nav-container ::marker {
+  content: none;
+}
+
 
 
