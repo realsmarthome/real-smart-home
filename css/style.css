@@ -382,6 +382,11 @@ nav { padding: 14px 0; }
     font-size: 1.2rem;
     line-height: 1.1;
   }
+
+   .nav-line-btn {
+    display: none !important;
+  }
 }
+
 
 
