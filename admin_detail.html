@@ -186,7 +186,9 @@
                 // วนลูปสร้างแถวตารางแบบแยกรายการ
                 if (Array.isArray(items)) {
                     items.forEach(item => {
-                        let lineTotal = item.price * item.qty;
+                        // ป้องกัน Error ถ้าไม่มีราคา ให้ถือว่าเป็น 0
+                        let price = item.price || 0; 
+                        let lineTotal = price * item.qty;
                         html += `
                         <tr>
                             <td>
@@ -194,7 +196,7 @@
                             </td>
                             <td style="text-align:center; font-size: 1.1rem;">${item.qty}</td> 
                             <td style="text-align:right;">
-                                <div style="font-size: 0.85rem; color: #666;">@${item.price.toLocaleString()}</div>
+                                <div style="font-size: 0.85rem; color: #666;">@${price.toLocaleString()}</div>
                                 <div style="font-weight:bold; color: #000;">${lineTotal.toLocaleString()}</div>
                             </td>
                         </tr>`;
@@ -273,3 +275,4 @@
     </script>
 </body>
 </html>
+
