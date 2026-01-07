@@ -132,7 +132,7 @@
                                 </a>
                             </td>
                             <td class="text-center"><a href="tel:${phone}" style="text-decoration:none; color:#333;">${phone}</a></td>
-                            <td class="col-items">${order.items.substring(0, 100)}...</td>
+                            <td class="col-items">${formatItemsSummary(order.items)}</td>
                             <td class="text-center fw-bold text-danger">${parseInt(order.total).toLocaleString()} ฿</td>
                         </tr>`;
                     });
@@ -156,9 +156,25 @@
             window.location.href = 'admin_detail.html';
         }
 
+        function formatItemsSummary(itemsData) {
+            try {
+                // ลองแปลง JSON กลับเป็น Object
+                const items = JSON.parse(itemsData);
+                if (Array.isArray(items)) {
+                    // ถ้าแปลงได้ ให้สร้างข้อความสรุป
+                    return items.map(i => `- ${i.name} (${i.qty})`).join('<br>');
+                }
+            } catch (e) {
+                // ถ้าแปลงไม่ได้ (เป็นข้อมูลเก่าที่เป็น Text) ให้แสดงแบบเดิม
+                return itemsData.substring(0, 100) + '...';
+            }
+            return '-';
+        }
+
         // โหลดข้อมูลทันทีเมื่อเปิดหน้า
         window.onload = fetchOrders;
     </script>
 
 </body>
 </html>
+
