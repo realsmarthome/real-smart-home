@@ -22,7 +22,7 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             height: 100vh;
-            overflow: hidden; /* ซ่อน Scrollbar หลัก เพื่อจัดการ Scroll แยกส่วน */
+            overflow: hidden;
         }
 
         /* Header Bar */
@@ -39,22 +39,22 @@
         nav a { color: #aaa; text-decoration: none; font-size: 0.9rem; }
         nav h1 { font-size: 1.2rem; color: var(--accent-color); }
 
-        /* Main Layout (2 Columns) */
+        /* Main Layout */
         .main-wrapper {
             display: flex;
-            height: calc(100vh - 60px); /* ความสูงเต็มลบ Header */
+            height: calc(100vh - 60px);
         }
 
         /* --- Left: Product Grid --- */
         .product-section {
-            flex: 2; /* กินพื้นที่ 2 ส่วน */
+            flex: 2;
             padding: 20px;
-            overflow-y: auto; /* เลื่อนเฉพาะส่วนนี้ได้ */
+            overflow-y: auto;
         }
 
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* จัดเรียงอัตโนมัติ */
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 15px;
         }
 
@@ -71,7 +71,7 @@
 
         .product-card:hover { border-color: var(--accent-color); transform: translateY(-3px); }
 
-        .product-card h3 { font-size: 1rem; margin-bottom: 5px; height: 40px; overflow: hidden; }
+        .product-card h3 { font-size: 1rem; margin-bottom: 5px; height: 50px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
         .product-price { color: var(--accent-color); font-weight: 600; margin-bottom: 15px; }
 
         .qty-control {
@@ -94,9 +94,9 @@
 
         /* --- Right: Quotation Paper --- */
         .quotation-section {
-            flex: 1; /* กินพื้นที่ 1 ส่วน */
-            background: #f4f4f4; /* สีขาวกระดาษ */
-            color: #333; /* ตัวหนังสือสีเข้ม */
+            flex: 1;
+            background: #f4f4f4;
+            color: #333;
             padding: 30px;
             overflow-y: auto;
             border-left: 5px solid var(--accent-color);
@@ -105,7 +105,6 @@
             min-width: 350px;
         }
 
-        /* Paper Design */
         .paper {
             background: #fff;
             padding: 20px;
@@ -125,12 +124,43 @@
         .q-header h2 { color: #000; font-size: 1.4rem; margin-bottom: 5px; }
         .q-contact { font-size: 0.85rem; color: #555; line-height: 1.4; }
 
-        .q-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        /* Customer Form */
+        .customer-form {
+            background: #fff;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+        .form-group { margin-bottom: 10px; }
+        .form-group label { display: block; font-size: 0.85rem; color: #555; margin-bottom: 5px; font-weight: bold; }
+        .form-input {
+            width: 100%; padding: 10px;
+            border: 1px solid #ddd; border-radius: 5px;
+            font-family: 'Prompt'; font-size: 0.9rem;
+            background: #fafafa;
+        }
+        .form-input:focus { outline: none; border-color: #000; background: #fff; }
+
+        .q-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-bottom: 20px;}
         .q-table th { text-align: left; border-bottom: 1px solid #ddd; padding: 5px; color: #777; font-weight: 400; }
         .q-table td { padding: 8px 5px; border-bottom: 1px solid #eee; vertical-align: top; }
         .col-qty { text-align: center; width: 40px; }
         .col-price { text-align: right; width: 80px; }
         
+        .q-note-area {
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+            margin-bottom: 15px;
+        }
+        .q-note-area label { font-size: 0.85rem; font-weight: bold; color: #555; display: block; margin-bottom: 5px; }
+        .q-note-area textarea {
+            width: 100%; padding: 10px;
+            border: 1px solid #ddd; border-radius: 5px;
+            font-family: 'Prompt', sans-serif; font-size: 0.9rem;
+            resize: vertical; background: #fafafa;
+        }
+        .q-note-area textarea:focus { outline: none; border-color: #000; background: #fff; }
+
         .q-total-row { 
             margin-top: auto; 
             padding-top: 20px; 
@@ -143,23 +173,24 @@
         .total-amount { font-size: 1.5rem; font-weight: bold; color: #d32f2f; }
 
         .q-footer-note {
-            margin-top: 20px;
-            font-size: 0.75rem;
-            color: #666;
-            text-align: center;
-            background: #eee;
-            padding: 10px;
-            border-radius: 4px;
+            margin-top: 20px; font-size: 0.75rem; color: #666;
+            text-align: center; background: #eee;
+            padding: 10px; border-radius: 4px;
         }
 
-        .btn-action-group { margin-top: 20px; display: grid; gap: 10px; }
+        .btn-action-group { margin-top: 10px; display: grid; gap: 10px; grid-template-columns: 1fr 1fr; }
         .btn-save {
-            background: #000; color: #fff; border: none; padding: 12px;
+            background: #00d2ff; color: #000; border: none; padding: 12px;
+            border-radius: 5px; cursor: pointer; font-weight: bold; font-family: 'Prompt';
+            transition: 0.3s;
+        }
+        .btn-save:hover { background: #00a0c2; }
+        .btn-copy {
+            background: #333; color: #fff; border: none; padding: 12px;
             border-radius: 5px; cursor: pointer; font-weight: bold; font-family: 'Prompt';
         }
-        .btn-save:hover { background: #333; }
+        .btn-copy:hover { background: #555; }
 
-        /* Responsive */
         @media (max-width: 900px) {
             body { height: auto; overflow: auto; }
             .main-wrapper { flex-direction: column; height: auto; }
@@ -177,8 +208,7 @@
     <div class="main-wrapper">
         <div class="product-section">
             <h2 style="margin-bottom: 20px; color: #888; font-weight: 400;">เลือกรายการอุปกรณ์ที่ต้องการ:</h2>
-            <div class="product-grid" id="grid-container">
-                </div>
+            <div class="product-grid" id="grid-container"></div>
         </div>
 
         <div class="quotation-section">
@@ -192,18 +222,28 @@
                     </div>
                 </div>
 
+                <div class="customer-form">
+                    <div class="form-group">
+                        <label for="cusName">ชื่อผู้ติดต่อ *</label>
+                        <input type="text" id="cusName" class="form-input" placeholder="กรุณาระบุชื่อของคุณ">
+                    </div>
+                    <div class="form-group">
+                        <label for="cusPhone">เบอร์โทรศัพท์ *</label>
+                        <input type="tel" id="cusPhone" class="form-input" placeholder="เช่น 081-234-5678">
+                    </div>
+                </div>
+
                 <table class="q-table">
                     <thead>
-                        <tr>
-                            <th>รายการ</th>
-                            <th class="col-qty">จำนวน</th>
-                            <th class="col-price">รวม (บาท)</th>
-                        </tr>
+                        <tr><th>รายการ</th><th class="col-qty">จำนวน</th><th class="col-price">รวม</th></tr>
                     </thead>
-                    <tbody id="q-body">
-                        <tr><td colspan="3" style="text-align:center; padding:20px; color:#999;">- ยังไม่ได้เลือกรายการ -</td></tr>
-                    </tbody>
+                    <tbody id="q-body"></tbody>
                 </table>
+
+                <div class="q-note-area">
+                    <label for="userNote">ความต้องการเพิ่มเติม:</label>
+                    <textarea id="userNote" rows="2" placeholder="เช่น ขอติดตั้งวันเสาร์..."></textarea>
+                </div>
 
                 <div class="q-total-row">
                     <span class="total-label">ยอดรวมสุทธิ</span>
@@ -216,12 +256,14 @@
             </div>
 
             <div class="btn-action-group">
-                <button class="btn-save" onclick="copyQuotation()">คัดลอกรายการส่ง LINE</button>
+                <button class="btn-save" onclick="saveToDatabase()">💾 ยืนยันและบันทึก</button>
+                <button class="btn-copy" onclick="copyQuotation()">📋 คัดลอกส่ง LINE</button>
             </div>
         </div>
     </div>
 
     <script>
+        // ข้อมูลสินค้า
         const products = [
             { id: 1, name: "สวิตช์ไฟอัจฉริยะ (3 ช่อง)", price: 790 },
             { id: 2, name: "สวิตช์ไฟอัจฉริยะ (2 ช่อง)", price: 740 },
@@ -231,12 +273,18 @@
             { id: 6, name: "ระบบไฟห้องน้ำอัตโนมัติ", price: 1290 },
             { id: 7, name: "ระบบควบคุมแอร์", price: 550 },
             { id: 8, name: "ชุดควบคุมประตูรั้วรีโมท", price: 1100 },
-            { id: 9, name: "กล้องวงจรปิด 64GB", price: 1890 }
+            { id: 9, name: "กล้องวงจรปิด 64GB", price: 1890 },
+            { id: 10, name: "เซ็นเซอร์ตรวจจับการมีอยู่ (Presence)", price: 950 },
+            { id: 11, name: "สมาร์ทปลั๊กฝังผนัง (2 ช่อง)", price: 950 },
+            { id: 12, name: "สมาร์ทปลั๊ก (เสียบผนัง)", price: 590 },
+            { id: 13, name: "Zigbee Gateway", price: 1890 },
+            { id: 14, name: "Zigbee Repeater", price: 590 },
+            { id: 15, name: "Digital Door Lock", price: 4900 }
         ];
 
         let cart = {};
 
-        // 1. สร้างสินค้าลง Grid
+        // ฟังก์ชันสร้าง Grid สินค้า
         function renderGrid() {
             const container = document.getElementById('grid-container');
             let html = '';
@@ -258,7 +306,7 @@
             container.innerHTML = html;
         }
 
-        // 2. อัปเดตใบเสนอราคา
+        // ฟังก์ชันสร้างใบเสนอราคา
         function renderQuotation() {
             const tbody = document.getElementById('q-body');
             let html = '';
@@ -284,7 +332,7 @@
             });
 
             if (!hasItem) {
-                html = `<tr><td colspan="3" style="text-align:center; padding:30px 0; color:#bbb;">เลือกอุปกรณ์ทางซ้าย<br>เพื่อเริ่มประเมินราคา</td></tr>`;
+                html = `<tr><td colspan="3" style="text-align:center; padding:30px 0; color:#bbb;">เลือกอุปกรณ์ทางซ้าย</td></tr>`;
             }
 
             tbody.innerHTML = html;
@@ -295,15 +343,72 @@
             if (!cart[id]) cart[id] = 0;
             cart[id] += change;
             if (cart[id] < 0) cart[id] = 0;
-            
-            // Re-render เฉพาะตัวเลขใน Grid เพื่อ Performance ที่ดีขึ้น (แต่ในที่นี้ Re-render หมดเพื่อง่ายต่อโค้ด)
             renderGrid();
             renderQuotation();
         }
 
+        // --- ฟังก์ชันบันทึกลง Google Sheets ---
+        function saveToDatabase() {
+            // ******************************************************
+            // อย่าลืมเอา URL มาใส่ตรงนี้!
+            // ******************************************************
+            const scriptURL = 'https://script.google.com/macros/u/2/s/AKfycbzkOehJBDiiH7UwsMw1PpRCd__mZxVMQPrpswaEKKM6HLUe4AObXshAOCeQWDBrHJnEAQ/exec'; 
+
+            const name = document.getElementById('cusName').value.trim();
+            const phone = document.getElementById('cusPhone').value.trim();
+            const note = document.getElementById('userNote').value.trim();
+            
+            if (!name || !phone) {
+                alert("กรุณากรอก 'ชื่อผู้ติดต่อ' และ 'เบอร์โทรศัพท์' ให้ครบถ้วนครับ");
+                return;
+            }
+
+            let items = [];
+            let total = 0;
+            products.forEach(p => {
+                if (cart[p.id] > 0) {
+                    items.push({ name: p.name, qty: cart[p.id] });
+                    total += p.price * cart[p.id];
+                }
+            });
+
+            if (items.length === 0) {
+                alert("กรุณาเลือกอุปกรณ์อย่างน้อย 1 รายการ");
+                return;
+            }
+
+            const data = { name: name, phone: phone, note: note, items: items, total_price: total };
+
+            // เปลี่ยนปุ่มเป็นกำลังบันทึก
+            const saveBtn = document.querySelector('.btn-save');
+            const originalText = saveBtn.innerText;
+            saveBtn.innerText = "⏳ กำลังบันทึก...";
+            saveBtn.disabled = true;
+
+            fetch(scriptURL, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                mode: 'no-cors' // สำคัญสำหรับ Google Script
+            })
+            .then(() => {
+                alert("✅ บันทึกข้อมูลเรียบร้อย!\nเจ้าหน้าที่จะติดต่อกลับที่เบอร์ " + phone);
+                saveBtn.innerText = originalText;
+                saveBtn.disabled = false;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("เกิดข้อผิดพลาดในการบันทึกข้อมูล");
+                saveBtn.innerText = originalText;
+                saveBtn.disabled = false;
+            });
+        }
+
         function copyQuotation() {
-            let text = "📄 *ใบเสนอราคา (ประเมินเบื้องต้น)*\n";
-            text += "จาก: Real Smart Home\n-----------------------\n";
+            let text = "📄 *ใบเสนอราคา (ประเมินเบื้องต้น)*\nจาก: Real Smart Home\n-----------------------\n";
+            const name = document.getElementById('cusName').value.trim();
+            const phone = document.getElementById('cusPhone').value.trim();
+            if(name) text += `คุณ: ${name} (${phone})\n-----------------------\n`;
+
             let total = 0;
             let hasItem = false;
 
@@ -318,6 +423,13 @@
 
             if(!hasItem) { alert("กรุณาเลือกรายการก่อนครับ"); return; }
 
+            const userNote = document.getElementById('userNote').value.trim();
+            if (userNote) {
+                text += "-----------------------\n";
+                text += "📝 *ความต้องการเพิ่มเติม:*\n";
+                text += userNote + "\n";
+            }
+
             text += "-----------------------\n";
             text += `💰 *ยอดรวมสุทธิ: ${total.toLocaleString()} บาท*\n`;
             text += "(ราคานี้ยังไม่รวมค่าติดตั้งและอุปกรณ์สิ้นเปลือง)";
@@ -327,7 +439,7 @@
             });
         }
 
-        // Init
+        // เริ่มต้นทำงาน
         renderGrid();
         renderQuotation();
 
