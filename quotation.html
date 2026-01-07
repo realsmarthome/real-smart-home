@@ -367,7 +367,12 @@
             let total = 0;
             products.forEach(p => {
                 if (cart[p.id] > 0) {
-                    items.push({ name: p.name, qty: cart[p.id] });
+                    items.push({ 
+                        id: p.id,         // (แนะนำ) ใส่ id ไปด้วยเผื่อใช้อ้างอิงรหัสสินค้า
+                        name: p.name, 
+                        qty: cart[p.id],
+                        price: p.price    // <--- (สำคัญ) ต้องเพิ่มบรรทัดนี้ครับ!
+                    });
                     total += p.price * cart[p.id];
                 }
             });
@@ -446,5 +451,6 @@
     </script>
 </body>
 </html>
+
 
 
