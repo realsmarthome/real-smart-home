@@ -392,9 +392,11 @@
                 mode: 'no-cors' // สำคัญสำหรับ Google Script
             })
             .then(() => {
+                // แจ้งเตือน (Code จะหยุดรอจนกว่า user กด OK)
                 alert("✅ บันทึกข้อมูลเรียบร้อย!\nเจ้าหน้าที่จะติดต่อกลับที่เบอร์ " + phone);
-                saveBtn.innerText = originalText;
-                saveBtn.disabled = false;
+                
+                // สั่งย้ายหน้าไปที่ index.html
+                window.location.href = 'index.html'; 
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -447,6 +449,7 @@
     </script>
 </body>
 </html>
+
 
 
 
