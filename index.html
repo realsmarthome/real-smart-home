@@ -243,7 +243,67 @@
     window.addEventListener('resize', () => {
       if (window.innerWidth > 768) closeMenu();
     });
+
+    // **********************************************
+    // ใส่ URL Google Apps Script ของคุณที่นี่
+    // **********************************************
+    const scriptURL = 'วาง_URL_จาก_GOOGLE_SCRIPT_ที่นี่';
+
+    // เรียกดึงข้อมูลทันทีที่เปิดหน้า
+    document.addEventListener('DOMContentLoaded', loadProductStats);
+
+    function loadProductStats() {
+        fetch(scriptURL, {
+            method: 'POST',
+            body: JSON.stringify({ action: 'get_product_stats' })
+        })
+        .then(response => response.json())
+        .then(res => {
+            const list = document.getElementById('statsList');
+            if (res.status === 'success' && res.data.length > 0) {
+                let html = '';
+                
+                // วนลูปแสดงรายการ
+                res.data.forEach((item, index) => {
+                    // จัดอันดับ 1-3 ให้สีเด่นๆ หน่อย
+                    let rankColor = '#333';
+                    let icon = '';
+                    if (index === 0) { rankColor = '#FFD700'; icon = '🥇'; } // ทอง
+                    else if (index === 1) { rankColor = '#C0C0C0'; icon = '🥈'; } // เงิน
+                    else if (index === 2) { rankColor = '#CD7F32'; icon = '🥉'; } // ทองแดง
+                    else { icon = `<span style="display:inline-block; width:20px; text-align:center; font-weight:bold; color:#555;">${index + 1}</span>`; }
+
+                    // คำนวณความยาวกราฟบาร์ (เทียบกับอันดับ 1)
+                    let maxCount = res.data[0].count;
+                    let barPercent = (item.count / maxCount) * 100;
+
+                    html += `
+                    <div style="background: #1e1e1e; padding: 15px; border-radius: 8px; display: flex; align-items: center; gap: 15px; border: 1px solid #333;">
+                        <div style="font-size: 1.5rem;">${icon}</div>
+                        <div style="flex-grow: 1;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom: 5px;">
+                                <span style="font-weight:bold; color:#fff;">${item.name}</span>
+                                <span style="color: var(--accent-color); font-weight:bold;">${item.count} ชิ้น</span>
+                            </div>
+                            <div style="background: #333; height: 6px; border-radius: 3px; overflow: hidden;">
+                                <div style="background: var(--accent-color); width: ${barPercent}%; height: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>`;
+                });
+                list.innerHTML = html;
+            } else {
+                list.innerHTML = '<div style="text-align:center;">ยังไม่มีข้อมูลสถิติ</div>';
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            document.getElementById('statsList').innerHTML = ''; // ซ่อนถ้าโหลดไม่ได้
+        });
+    }
+    
   </script>
 
 </body>
 </html>
+
