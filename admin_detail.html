@@ -1,21 +1,162 @@
-<script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzkOehJBDiiH7UwsMw1PpRCd__mZxVMQPrpswaEKKM6HLUe4AObXshAOCeQWDBrHJnEAQ/exec'; // <--- อย่าลืมใส่ URL เดิมของคุณ
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายละเอียดใบเสนอราคา - Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root { --bg-dark: #121212; --panel-dark: #1e1e1e; --accent: #00d2ff; --text: #fff; }
+        body { font-family: 'Prompt', sans-serif; background: var(--bg-dark); color: var(--text); margin: 0; padding: 20px; }
+
+        .container { max-width: 1200px; margin: 0 auto; display: flex; gap: 30px; }
+        
+        /* ฝั่งซ้าย: ใบเสนอราคา (กระดาษ) */
+        .quotation-wrapper { flex: 2; }
+        .paper {
+            background: #fff; color: #333; padding: 40px; border-radius: 5px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5); min-height: 800px; position: relative;
+        }
+        .paper-header { display: flex; justify-content: space-between; border-bottom: 2px solid #ddd; padding-bottom: 20px; margin-bottom: 20px; }
+        .logo { font-size: 1.5rem; font-weight: bold; color: #000; text-transform: uppercase; }
+        .meta-info { text-align: right; font-size: 0.9rem; color: #555; }
+        .customer-info { margin-bottom: 30px; padding: 15px; background: #f9f9f9; border-radius: 5px; }
+        .q-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        .q-table th { background: #333; color: #fff; padding: 10px; text-align: left; }
+        .q-table td { padding: 10px; border-bottom: 1px solid #eee; vertical-align: top; }
+        .total-section { text-align: right; font-size: 1.2rem; font-weight: bold; margin-top: 20px; }
+        .total-price { color: #d32f2f; font-size: 1.8rem; }
+        .cust-note { font-size: 0.9rem; color: #666; margin-top: 30px; border-top: 1px dashed #ccc; padding-top: 10px; }
+
+        /* ฝั่งขวา: เครื่องมือแอดมิน */
+        .admin-panel { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+        .card { background: var(--panel-dark); padding: 20px; border-radius: 10px; border: 1px solid #333; }
+        .card h3 { color: var(--accent); margin-top: 0; font-size: 1.1rem; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        
+        .status-options label { display: block; margin-bottom: 10px; cursor: pointer; }
+        .admin-note-area { width: 100%; background: #2a2a2a; border: 1px solid #444; color: #fff; padding: 10px; border-radius: 5px; font-family: 'Prompt'; resize: vertical; margin-bottom: 10px;}
+        
+        .btn { display: block; width: 100%; padding: 12px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-family: 'Prompt'; margin-bottom: 10px; transition: 0.2s; text-align: center; text-decoration: none; }
+        .btn-save { background: var(--accent); color: #000; }
+        .btn-save:hover { background: #fff; }
+        .btn-print { background: #444; color: #fff; }
+        .btn-tel { background: #00c853; color: #fff; }
+        .btn-back { background: transparent; color: #aaa; border: 1px solid #555; }
+
+        /* การพิมพ์ */
+        @media print {
+            body { background: #fff; padding: 0; }
+            .admin-panel, .btn-back { display: none !important; }
+            .container { display: block; }
+            .quotation-wrapper { width: 100%; }
+            .paper { box-shadow: none; padding: 0; }
+        }
+
+        @media (max-width: 900px) { .container { flex-direction: column-reverse; } }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="quotation-wrapper">
+            <div class="paper">
+                <div class="paper-header">
+                    <div class="logo">Real Smart Home</div>
+                    <div class="meta-info">
+                        <strong>ใบเสนอราคา / Quotation</strong><br>
+                        วันที่: <span id="qDate">-</span>
+                    </div>
+                </div>
+
+                <div class="customer-info">
+                    <strong>ผู้ติดต่อ:</strong> <span id="qName">-</span><br>
+                    <strong>เบอร์โทร:</strong> <span id="qPhone">-</span>
+                </div>
+
+                <table class="q-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 50%;">รายการ (Description)</th>
+                            <th style="text-align: center; width: 15%;">จำนวน</th>
+                            <th style="text-align: right; width: 35%;">ราคา/หน่วย | รวม</th>
+                        </tr>
+                    </thead>
+                    <tbody id="qItems">
+                        </tbody>
+                </table>
+
+                <div class="total-section">
+                    ยอดรวมสุทธิ: <span class="total-price" id="qTotal">0</span> บาท
+                </div>
+
+                <div class="cust-note">
+                    <strong>📝 ความต้องการเพิ่มเติมจากลูกค้า:</strong><br>
+                    <span id="qNote">-</span>
+                </div>
+
+                <div style="margin-top: 50px; font-size: 0.8rem; color: #999; text-align: center;">
+                    *ราคานี้เป็นราคาเบื้องต้น ยังไม่รวมค่าติดตั้งและอุปกรณ์สิ้นเปลือง<br>
+                    Real Smart Home | โทร: 083 0909 036 | Line: @realsmarthome
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-panel">
+            <a href="admin_orders.html" class="btn btn-back">← กลับหน้ารายการ</a>
+
+            <div class="card">
+                <h3><i class="fa-solid fa-list-check"></i> สถานะงาน (Status)</h3>
+                <div class="status-options">
+                    <label>
+                        <input type="checkbox" id="chkContacted"> ติดต่อกลับลูกค้าแล้ว
+                    </label>
+                    <label>
+                        <input type="checkbox" id="chkSent"> ส่งใบเสนอราคาแล้ว
+                    </label>
+                    <label>
+                        <input type="checkbox" id="chkClosed"> <strong>ปิดการขายเรียบร้อย</strong>
+                    </label>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3><i class="fa-solid fa-note-sticky"></i> บันทึกช่วยจำ (Admin Note)</h3>
+                <textarea id="adminNote" rows="5" class="admin-note-area" placeholder="เช่น ลูกค้านัดดูหน้างานวันเสาร์..."></textarea>
+                <button class="btn btn-save" onclick="saveUpdate()">💾 บันทึกสถานะ & โน้ต</button>
+            </div>
+
+            <div class="card">
+                <h3><i class="fa-solid fa-bolt"></i> Action ด่วน</h3>
+                <a href="#" id="btnCall" class="btn btn-tel"><i class="fa-solid fa-phone"></i> โทรหาลูกค้า</a>
+                <button class="btn btn-print" onclick="window.print()"><i class="fa-solid fa-print"></i> พิมพ์ / PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // **********************************************
+        // ใส่ URL Google Apps Script ของคุณที่นี่
+        // **********************************************
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzkOehJBDiiH7UwsMw1PpRCd__mZxVMQPrpswaEKKM6HLUe4AObXshAOCeQWDBrHJnEAQ/exec';
 
         let currentOrder = null;
 
         window.onload = function() {
             const dataStr = localStorage.getItem('viewOrderData');
+            
             if (!dataStr) {
-                alert('ไม่พบข้อมูลรายการ');
+                alert('ไม่พบข้อมูลรายการ กรุณาเลือกรายการใหม่');
                 window.location.href = 'admin_orders.html';
                 return;
             }
+
             currentOrder = JSON.parse(dataStr);
             renderPage(currentOrder);
         };
 
         function renderPage(order) {
-            // ข้อมูลส่วนหัว
+            // 1. ลงข้อมูลทั่วไป
             document.getElementById('qDate').innerText = order.date;
             document.getElementById('qName').innerText = order.name;
             let phone = order.phone.replace("'", "");
@@ -24,50 +165,62 @@
             document.getElementById('qNote').innerText = order.note || '-';
             document.getElementById('btnCall').href = 'tel:' + phone;
 
-            // --- ส่วนสำคัญ: แปลงรายการสินค้า ---
+            // 2. แปลงรายการสินค้า (สำคัญ: แก้ไขใหม่ให้รองรับ JSON)
             const itemsContainer = document.getElementById('qItems');
             let html = '';
             
             try {
-                // 1. ลองแปลงข้อมูลว่าเป็น JSON หรือไม่ (สำหรับข้อมูลใหม่)
-                const items = JSON.parse(order.items);
-                
+                // พยายามแปลง Text ให้เป็น JSON Array
+                let items = [];
+                if (typeof order.items === 'string') {
+                    // ถ้าขึ้นต้นด้วย [ แสดงว่าเป็น JSON (ข้อมูลใหม่)
+                    if (order.items.trim().startsWith('[')) {
+                        items = JSON.parse(order.items);
+                    } else {
+                        throw new Error("Old text format"); // โยนไป fallback
+                    }
+                } else {
+                    items = order.items; // เผื่อเป็น Object อยู่แล้ว
+                }
+
+                // วนลูปสร้างแถวตาราง
                 if (Array.isArray(items)) {
-                    items.forEach((item, index) => {
+                    items.forEach(item => {
                         let lineTotal = item.price * item.qty;
                         html += `
-                        <tr style="border-bottom: 1px solid #eee;">
-                            <td style="padding: 10px;">
-                                <strong>${index + 1}. ${item.name}</strong>
+                        <tr>
+                            <td>
+                                <strong>${item.name}</strong>
+                                <div style="font-size: 0.8rem; color: #888;">Code: ${item.id || '-'}</div>
                             </td>
-                            <td style="text-align: center; padding: 10px;">${item.qty}</td>
-                            <td style="text-align: right; padding: 10px;">
-                                <div>@${item.price.toLocaleString()}</div>
-                                <div style="font-weight:bold;">${lineTotal.toLocaleString()}</div>
+                            <td style="text-align:center; font-size: 1.1rem;">${item.qty}</td> 
+                            <td style="text-align:right;">
+                                <div style="font-size: 0.85rem; color: #666;">@${item.price.toLocaleString()}</div>
+                                <div style="font-weight:bold; color: #000;">${lineTotal.toLocaleString()}</div>
                             </td>
                         </tr>`;
                     });
                 }
 
             } catch (e) {
-                // 2. Fallback: ถ้าเป็นข้อมูลเก่า (Text ธรรมดา) ให้แสดงแบบเดิม
+                // Fallback: ถ้าเป็นข้อมูลเก่าที่เป็นข้อความธรรมดา ให้แสดงแบบเดิม
+                console.warn("Displaying old format data");
                 const lines = order.items.split('\n');
                 lines.forEach(line => {
-                    if (line.trim() !== '') {
-                        html += `
-                        <tr>
-                            <td style="padding: 10px;">${line}</td>
-                            <td style="text-align: center;">-</td>
-                            <td style="text-align: right;">-</td>
+                    if(line.trim() !== '') {
+                        html += `<tr>
+                            <td>${line}</td>
+                            <td style="text-align:center;">-</td> 
+                            <td style="text-align:right;">-</td>
                         </tr>`;
                     }
                 });
             }
-
             itemsContainer.innerHTML = html;
 
-            // Admin Panel
+            // 3. ลงข้อมูล Admin Panel
             document.getElementById('adminNote').value = order.admin_note || '';
+            
             const status = order.status || '';
             if (status.includes('Contacted')) document.getElementById('chkContacted').checked = true;
             if (status.includes('Sent')) document.getElementById('chkSent').checked = true;
@@ -76,6 +229,7 @@
 
         function saveUpdate() {
             if (!currentOrder) return;
+
             const btn = document.querySelector('.btn-save');
             btn.innerText = '⏳ กำลังบันทึก...';
             btn.disabled = true;
@@ -105,15 +259,18 @@
                     currentOrder.admin_note = newNote;
                     localStorage.setItem('viewOrderData', JSON.stringify(currentOrder));
                 } else {
-                    alert('❌ เกิดข้อผิดพลาด');
+                    alert('❌ เกิดข้อผิดพลาด: ' + res.message);
                 }
                 btn.innerText = '💾 บันทึกสถานะ & โน้ต';
                 btn.disabled = false;
             })
             .catch(err => {
+                console.error(err);
                 alert('เชื่อมต่อ Server ไม่ได้');
                 btn.innerText = '💾 บันทึกสถานะ & โน้ต';
                 btn.disabled = false;
             });
         }
     </script>
+</body>
+</html>
