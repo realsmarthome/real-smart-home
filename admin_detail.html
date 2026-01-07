@@ -165,7 +165,7 @@
             document.getElementById('qNote').innerText = order.note || '-';
             document.getElementById('btnCall').href = 'tel:' + phone;
 
-            // 2. แปลงรายการสินค้า (สำคัญ: แก้ไขใหม่ให้รองรับ JSON)
+            // 2. แปลงรายการสินค้า (ส่วนสำคัญที่แก้ปัญหา)
             const itemsContainer = document.getElementById('qItems');
             let html = '';
             
@@ -173,17 +173,17 @@
                 // พยายามแปลง Text ให้เป็น JSON Array
                 let items = [];
                 if (typeof order.items === 'string') {
-                    // ถ้าขึ้นต้นด้วย [ แสดงว่าเป็น JSON (ข้อมูลใหม่)
+                    // ตรวจสอบว่าข้อมูลเป็น JSON หรือไม่ (ขึ้นต้นด้วย [)
                     if (order.items.trim().startsWith('[')) {
                         items = JSON.parse(order.items);
                     } else {
-                        throw new Error("Old text format"); // โยนไป fallback
+                        throw new Error("Old text format"); // ถ้าไม่ใช่ JSON ให้โยนไปทำแบบเก่า
                     }
                 } else {
                     items = order.items; // เผื่อเป็น Object อยู่แล้ว
                 }
 
-                // วนลูปสร้างแถวตาราง
+                // วนลูปสร้างแถวตารางแบบแยกรายการ
                 if (Array.isArray(items)) {
                     items.forEach(item => {
                         let lineTotal = item.price * item.qty;
@@ -191,7 +191,6 @@
                         <tr>
                             <td>
                                 <strong>${item.name}</strong>
-                                <div style="font-size: 0.8rem; color: #888;">Code: ${item.id || '-'}</div>
                             </td>
                             <td style="text-align:center; font-size: 1.1rem;">${item.qty}</td> 
                             <td style="text-align:right;">
@@ -203,8 +202,8 @@
                 }
 
             } catch (e) {
-                // Fallback: ถ้าเป็นข้อมูลเก่าที่เป็นข้อความธรรมดา ให้แสดงแบบเดิม
-                console.warn("Displaying old format data");
+                // Fallback: ถ้าเป็นข้อมูลเก่า (ก่อนแก้ระบบ) ที่เป็นข้อความธรรมดา ให้แสดงแบบเดิม
+                // ป้องกันหน้าเว็บพัง
                 const lines = order.items.split('\n');
                 lines.forEach(line => {
                     if(line.trim() !== '') {
