@@ -3,68 +3,338 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>After Sales Service - Real Smart Home</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>แคตตาล็อกสินค้า - Real Smart Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
     <style>
-        :root { --bg-color: #0f0f0f; --card-bg: #1e1e1e; --accent-color: #00d2ff; --text-primary: #fff; --text-sec: #b0b0b0; }
-        body { margin: 0; font-family: 'Prompt', sans-serif; background: var(--bg-color); color: var(--text-primary); }
-        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
-        nav { padding: 20px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
-        .logo { color: var(--accent-color); font-weight: bold; text-decoration: none; font-size: 1.2rem; }
-        .back-link { color: #fff; text-decoration: none; font-size: 0.9rem; }
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --accent-color: #00d2ff;
+            --text-main: #ffffff;
+            --text-sec: #aaaaaa;
+            --border: #333;
+        }
 
-        .service-list { list-style: none; padding: 0; margin-top: 40px; }
-        .service-item { display: flex; gap: 20px; background: var(--card-bg); padding: 30px; margin-bottom: 20px; border-radius: 15px; align-items: flex-start; }
-        .s-icon { font-size: 2rem; color: var(--accent-color); background: rgba(0, 210, 255, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .s-content h3 { margin-bottom: 10px; }
-        .s-content p { color: var(--text-sec); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Prompt', sans-serif; background: var(--bg-color); color: var(--text-main); }
 
-        .cta-box { text-align: center; margin-top: 60px; padding: 40px; background: linear-gradient(45deg, #111, #222); border-radius: 20px; border: 1px solid #444; }
-        .btn-line { background: #00c300; color: #fff; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: bold; display: inline-block; margin-top: 20px; }
+        /* Navigation */
+        nav { padding: 20px; text-align: center; border-bottom: 1px solid var(--border); background: rgba(18,18,18,0.95); position: sticky; top: 0; z-index: 100; }
+        nav a { color: var(--text-main); text-decoration: none; font-size: 1.2rem; font-weight: 600; margin: 0 15px; transition: 0.3s; }
+        nav a:hover, nav a.active { color: var(--accent-color); }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+
+        /* Header & Filters */
+        .page-header { text-align: center; margin-bottom: 40px; }
+        .page-header h1 { font-size: 2rem; color: var(--accent-color); margin-bottom: 10px; }
+        .page-header p { color: var(--text-sec); }
+
+        .filters { display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; flex-wrap: wrap; }
+        .filter-btn {
+            background: transparent; border: 1px solid var(--border); color: var(--text-sec);
+            padding: 8px 20px; border-radius: 50px; cursor: pointer; transition: 0.3s; font-family: 'Prompt';
+        }
+        .filter-btn:hover, .filter-btn.active { background: var(--accent-color); color: #000; border-color: var(--accent-color); font-weight: 600; }
+
+        /* Grid Layout */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        /* Product Card */
+        .product-card {
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
+            overflow: hidden; transition: 0.3s; display: flex; flex-direction: column;
+        }
+        .product-card:hover { transform: translateY(-5px); border-color: var(--accent-color); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+
+        .card-icon {
+            height: 180px; display: flex; align-items: center; justify-content: center;
+            background: #181818; color: #444; font-size: 5rem; transition: 0.3s;
+        }
+        .product-card:hover .card-icon { color: var(--accent-color); }
+
+        .card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 5px; }
+        .card-price { color: var(--accent-color); font-size: 1.2rem; font-weight: bold; margin-bottom: 15px; }
+        .card-desc { font-size: 0.85rem; color: var(--text-sec); margin-bottom: 20px; line-height: 1.5; flex-grow: 1; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;}
+        
+        .btn-detail {
+            background: #333; color: #fff; text-align: center; padding: 10px;
+            border-radius: 6px; cursor: pointer; transition: 0.3s; font-size: 0.9rem;
+        }
+        .btn-detail:hover { background: #444; }
+
+        /* Modal (Popup) */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
+            z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px;
+        }
+        .modal-content {
+            background: #252525; width: 100%; max-width: 800px; border-radius: 12px;
+            overflow: hidden; border: 1px solid #444; position: relative; animation: slideUp 0.3s;
+        }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .close-btn {
+            position: absolute; top: 15px; right: 20px; font-size: 1.5rem; color: #aaa; cursor: pointer; z-index: 10;
+        }
+        .close-btn:hover { color: #fff; }
+
+        .modal-body { display: flex; flex-direction: column; }
+        .modal-header-section {
+            padding: 30px; border-bottom: 1px solid #333; text-align: center; background: #2a2a2a;
+        }
+        .modal-icon { font-size: 4rem; color: var(--accent-color); margin-bottom: 15px; }
+        .modal-title { font-size: 1.5rem; font-weight: 600; margin-bottom: 5px; }
+        .modal-price { color: var(--accent-color); font-size: 1.3rem; font-weight: bold; }
+
+        .modal-tabs { display: flex; background: #1a1a1a; border-bottom: 1px solid #333; }
+        .tab-btn {
+            flex: 1; padding: 15px; cursor: pointer; text-align: center; color: #888; border-bottom: 3px solid transparent; transition: 0.3s; font-family: 'Prompt';
+        }
+        .tab-btn:hover { color: #fff; background: #222; }
+        .tab-btn.active { color: var(--accent-color); border-bottom-color: var(--accent-color); background: #252525; }
+
+        .modal-info-content { padding: 30px; height: 300px; overflow-y: auto; color: #ccc; line-height: 1.6; }
+        .info-section { display: none; }
+        .info-section.active { display: block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .feature-list, .usage-list { list-style: none; padding: 0; }
+        .feature-list li, .usage-list li { margin-bottom: 10px; padding-left: 20px; position: relative; }
+        .feature-list li::before { content: '✓'; color: var(--accent-color); position: absolute; left: 0; font-weight: bold; }
+        .usage-list li::before { content: '•'; color: #888; position: absolute; left: 0; }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .modal-body { flex-direction: row; height: 500px; }
+            .modal-header-section { width: 35%; border-bottom: none; border-right: 1px solid #333; display: flex; flex-direction: column; justify-content: center; }
+            .modal-main { width: 65%; display: flex; flex-direction: column; }
+            .modal-info-content { flex-grow: 1; height: auto; }
+        }
     </style>
 </head>
 <body>
+
     <nav>
-        <a href="index.html" class="logo">REAL SMART HOME</a>
-        <a href="index.html" class="back-link">← กลับหน้าหลัก</a>
+        <a href="index.html">หน้าหลัก</a>
+        <a href="catalog.html" class="active">แคตตาล็อก</a>
+        <a href="quotation.html">ประเมินราคา</a>
     </nav>
 
     <div class="container">
-        <header style="text-align: center; padding: 50px 0;">
-            <h1 style="color: var(--accent-color); font-size: 2.5rem;">05. After Sales Service</h1>
-            <p>Smart Home ไม่ใช่งานจบวันติดตั้ง แต่คือการดูแลระยะยาว</p>
-        </header>
+        <div class="page-header">
+            <h1>Product Catalog</h1>
+            <p>อุปกรณ์ Smart Home คุณภาพสูง คัดสรรมาเพื่อบ้านคุณโดยเฉพาะ</p>
+        </div>
 
-        <ul class="service-list">
-            <li class="service-item">
-                <div class="s-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
-                <div class="s-content">
-                    <h3>Onboarding & Training</h3>
-                    <p>วันส่งมอบงาน เรามีคอร์สสอนสั้นๆ ให้ทุกคนในบ้านใช้งานเป็น (รวมถึงผู้สูงอายุ) พร้อมคู่มือการใช้งานเฉพาะบ้านคุณ</p>
-                </div>
-            </li>
-            <li class="service-item">
-                <div class="s-icon"><i class="fa-solid fa-sliders"></i></div>
-                <div class="s-content">
-                    <h3>Tuning Period (ปรับจูนระบบ)</h3>
-                    <p>หลังอยู่ไป 1 เดือน พฤติกรรมอาจเปลี่ยน (เช่น อยากให้ไฟทางเดินติดนานขึ้น) เรามีบริการรีโมทมาปรับตั้งค่า Automation ให้ใหม่ฟรี</p>
-                </div>
-            </li>
-            <li class="service-item">
-                <div class="s-icon"><i class="fa-solid fa-headset"></i></div>
-                <div class="s-content">
-                    <h3>Fast Support</h3>
-                    <p>มีช่องทาง LINE Official สำหรับแจ้งปัญหา ตอบไว แก้ไขตรงจุด ไม่ทิ้งงาน</p>
-                </div>
-            </li>
-        </ul>
+        <div class="filters">
+            <button class="filter-btn active" onclick="filterProducts('all')">ทั้งหมด</button>
+            <button class="filter-btn" onclick="filterProducts('light')">ระบบไฟ</button>
+            <button class="filter-btn" onclick="filterProducts('security')">ความปลอดภัย</button>
+            <button class="filter-btn" onclick="filterProducts('control')">การควบคุม</button>
+        </div>
 
-        <div class="cta-box">
-            <h2>มั่นใจในบริการของเรา?</h2>
-            <p style="color: #aaa; margin-top: 10px;">ปรึกษาเราวันนี้ เพื่อบ้านในฝันของคุณ</p>
-            <a href="https://line.me/ti/p/@realsmarthome" class="btn-line"><i class="fa-brands fa-line"></i> ทัก LINE หาเรา</a>
+        <div class="product-grid" id="productGrid">
+            </div>
+    </div>
+
+    <div class="modal-overlay" id="productModal" onclick="closeModal(event)">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModalBtn()">&times;</span>
+            <div class="modal-body">
+                <div class="modal-header-section">
+                    <div class="modal-icon" id="mIcon"><i class="fa-solid fa-box"></i></div>
+                    <div class="modal-title" id="mName">ชื่อสินค้า</div>
+                    <div class="modal-price" id="mPrice">฿0</div>
+                </div>
+
+                <div class="modal-main">
+                    <div class="modal-tabs">
+                        <div class="tab-btn active" onclick="switchTab('desc')">รายละเอียด</div>
+                        <div class="tab-btn" onclick="switchTab('feat')">คุณสมบัติ</div>
+                        <div class="tab-btn" onclick="switchTab('usage')">วิธีใช้งาน</div>
+                    </div>
+
+                    <div class="modal-info-content">
+                        <div id="tab-desc" class="info-section active">รายละเอียด...</div>
+                        <div id="tab-feat" class="info-section">
+                            <ul class="feature-list" id="list-feat"></ul>
+                        </div>
+                        <div id="tab-usage" class="info-section">
+                            <ul class="usage-list" id="list-usage"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <script>
+        // ข้อมูลสินค้า (จำลอง Database)
+        const products = [
+            {
+                id: 1, category: "light", icon: "fa-regular fa-lightbulb",
+                name: "สวิตช์ไฟอัจฉริยะ (Smart Switch)", price: 790,
+                desc: "เปลี่ยนสวิตช์เดิมให้สั่งงานผ่านมือถือได้ทันที ดีไซน์กระจกนิรภัยสวยหรู ทนทาน สัมผัสแม่นยำ มีไฟ LED บอกสถานะตอนกลางคืน",
+                features: ["กระจก Tempered Glass กันรอยขีดข่วน", "สั่งงานด้วยเสียง (Siri/Google/Alexa)", "ตั้งเวลาเปิด-ปิดอัตโนมัติ", "ไม่ต้องเดินสาย Neutral (รุ่น Capacitor)"],
+                usage: ["1. ตัดไฟบ้านเพื่อความปลอดภัย", "2. ต่อสาย L และ L1 เข้าช่องสวิตช์", "3. เปิดไฟ และกดปุ่มค้างไว้ 5 วิ เพื่อจับคู่"]
+            },
+            {
+                id: 4, category: "security", icon: "fa-solid fa-door-open",
+                name: "เซ็นเซอร์ประตู/หน้าต่าง", price: 320,
+                desc: "รู้ทันทีเมื่อมีใครเปิดประตูบ้าน แจ้งเตือนเข้ามือถือแบบ Real-time ขนาดเล็ก ติดตั้งง่ายไม่ต้องใช้เครื่องมือ",
+                features: ["แจ้งเตือนทันทีเมื่อประตูเปิด/ปิด", "ใช้เป็นตัวสั่งงาน Automation (เปิดประตู -> ไฟติด)", "แบตเตอรี่ใช้งานได้นาน 1-2 ปี", "ดูประวัติการเปิด-ปิดย้อนหลังได้"],
+                usage: ["1. ดึงแผ่นกั้นแบตเตอรี่ออก", "2. ติดกาว 3M ที่ประตูและวงกบ", "3. เชื่อมต่อเข้าแอปผ่าน Zigbee Gateway"]
+            },
+            {
+                id: 5, category: "security", icon: "fa-solid fa-person-rays",
+                name: "เซ็นเซอร์จับความเคลื่อนไหว", price: 340,
+                desc: "ตรวจจับการเคลื่อนไหวของคนหรือสัตว์เลี้ยง เหมาะสำหรับทำระบบกันขโมย หรือระบบไฟอัตโนมัติทางเดิน",
+                features: ["มุมตรวจจับกว้าง 170 องศา", "ระยะตรวจจับ 7 เมตร", "ปรับฐานหมุนได้อิสระ", "แจ้งเตือนเมื่อแบตเตอรี่ต่ำ"],
+                usage: ["1. วางหรือติดผนังในจุดที่ต้องการ", "2. เชื่อมต่อแอป", "3. ตั้งค่า Automation เช่น 'เจอคน -> เปิดไฟ'"]
+            },
+            {
+                id: 6, category: "light", icon: "fa-solid fa-restroom",
+                name: "ระบบไฟห้องน้ำอัตโนมัติ", price: 1290,
+                desc: "ชุดคิทพร้อมใช้สำหรับห้องน้ำ ไฟติดเองเมื่อเดินเข้า และดับเองเมื่อไม่มีคนอยู่ ไม่ต้องคลำหาสวิตช์ตอนมืด",
+                features: ["รวมเซ็นเซอร์และสวิตช์ในชุดเดียว", "หน่วงเวลาดับไฟได้ตามต้องการ", "ประหยัดไฟ ลืมปิดไฟก็ไม่เป็นไร"],
+                usage: ["ติดตั้งแทนสวิตช์ไฟหน้าห้องน้ำ และติดเซ็นเซอร์ไว้ในห้องน้ำ"]
+            },
+            {
+                id: 13, category: "control", icon: "fa-solid fa-network-wired",
+                name: "Zigbee Gateway (Hub)", price: 1890,
+                desc: "หัวใจสำคัญของบ้านอัจฉริยะ ทำหน้าที่เชื่อมต่ออุปกรณ์ Zigbee ทั้งหมดเข้ากับอินเทอร์เน็ต ทำให้ระบบเสถียรเน็ตล่มก็ยังทำงานได้",
+                features: ["รองรับอุปกรณ์ลูกได้สูงสุด 128 ตัว", "สัญญาณเสถียรกว่า Wi-Fi", "กินไฟน้อยมาก", "ขนาดเล็กกะทัดรัด"],
+                usage: ["เสียบสาย LAN เข้ากับ Router บ้าน และเสียบปลั๊กไฟ จากนั้นกดค้นหาในแอป"]
+            },
+            {
+                id: 15, category: "security", icon: "fa-solid fa-fingerprint",
+                name: "Digital Door Lock", price: 4900,
+                desc: "กลอนประตูดิจิตอล ปลดล็อกได้ 5 ระบบ (นิ้วมือ, รหัส, การ์ด, กุญแจ, แอป) หมดปัญหาลืมกุญแจบ้าน",
+                features: ["สแกนนิ้วแม่นยำ รวดเร็ว 0.3 วิ", "สร้างรหัสผ่านชั่วคราวให้แม่บ้านได้", "แจ้งเตือนเมื่อมีการงัดแงะ", "มีกุญแจสำรองฉุกเฉิน"],
+                usage: ["ติดตั้งแทนลูกบิดเดิม หรือติดเสริม (มีช่างแนะนำ)", "ตั้งค่าลายนิ้วมือผ่านตัวเครื่อง"]
+            },
+            {
+                id: 9, category: "security", icon: "fa-solid fa-video",
+                name: "กล้องวงจรปิดภายใน", price: 1890,
+                desc: "กล้องคมชัดระดับ 2K หมุนได้ 360 องศา พูดคุยโต้ตอบได้ มี AI ตรวจจับมนุษย์ แยกแยะคนกับสัตว์เลี้ยง",
+                features: ["ความละเอียด 3 ล้านพิกเซล", "โหมดกลางคืนชัดแจ๋ว", "บันทึกลง SD Card หรือ Cloud", "ดูพร้อมกันได้หลายจอ"],
+                usage: ["เสียบปลั๊ก วางบนโต๊ะหรือติดเพดาน เชื่อมต่อ Wi-Fi บ้าน"]
+            },
+            {
+                id: 7, category: "control", icon: "fa-regular fa-snowflake",
+                name: "IR Remote (แอร์/ทีวี)", price: 550,
+                desc: "เปลี่ยนแอร์เก่า ทีวีเก่า ให้เป็นรุ่นใหม่ สั่งงานผ่านมือถือได้ ควบคุมอุณหภูมิได้ก่อนถึงบ้าน",
+                features: ["รวมรีโมททุกตัวในบ้านไว้ในมือถือ", "สั่งงานด้วยเสียงได้", "ตั้งเวลาเปิด-ปิดแอร์"],
+                usage: ["วางไว้ในห้องที่ต้องการคุม (ห้ามมีสิ่งกีดขวางสัญญาณ IR)"]
+            }
+        ];
+
+        // 1. Render สินค้า
+        function renderProducts(filterCat) {
+            const grid = document.getElementById('productGrid');
+            grid.innerHTML = '';
+            
+            const filtered = filterCat === 'all' ? products : products.filter(p => p.category === filterCat);
+            
+            filtered.forEach(p => {
+                const html = `
+                <div class="product-card">
+                    <div class="card-icon">
+                        <i class="${p.icon}"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">${p.name}</div>
+                        <div class="card-price">฿${p.price.toLocaleString()}</div>
+                        <div class="card-desc">${p.desc}</div>
+                        <div class="btn-detail" onclick="openModal(${p.id})">ดูรายละเอียด</div>
+                    </div>
+                </div>`;
+                grid.innerHTML += html;
+            });
+
+            // อัปเดตปุ่ม Filter
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if(btn.innerText === getCatName(filterCat)) btn.classList.add('active');
+            });
+        }
+
+        // Helper แปลงชื่อปุ่ม (แบบบ้านๆ)
+        function getCatName(cat) {
+            if(cat==='light') return 'ระบบไฟ';
+            if(cat==='security') return 'ความปลอดภัย';
+            if(cat==='control') return 'การควบคุม';
+            return 'ทั้งหมด';
+        }
+
+        // 2. Modal Logic
+        function openModal(id) {
+            const product = products.find(p => p.id === id);
+            if(!product) return;
+
+            // Fill Data
+            document.getElementById('mIcon').innerHTML = `<i class="${product.icon}"></i>`;
+            document.getElementById('mName').innerText = product.name;
+            document.getElementById('mPrice').innerText = `฿${product.price.toLocaleString()}`;
+            document.getElementById('tab-desc').innerText = product.desc;
+
+            // Fill Lists
+            const featList = document.getElementById('list-feat');
+            featList.innerHTML = product.features.map(f => `<li>${f}</li>`).join('');
+            
+            const usageList = document.getElementById('list-usage');
+            usageList.innerHTML = product.usage.map(u => `<li>${u}</li>`).join('');
+
+            // Reset Tab to Desc
+            switchTab('desc');
+
+            // Show Modal
+            document.getElementById('productModal').style.display = 'flex';
+        }
+
+        function closeModal(e) {
+            if (e.target.id === 'productModal') {
+                document.getElementById('productModal').style.display = 'none';
+            }
+        }
+        function closeModalBtn() {
+             document.getElementById('productModal').style.display = 'none';
+        }
+
+        function switchTab(tabName) {
+            // Hide all contents
+            document.querySelectorAll('.info-section').forEach(el => el.classList.remove('active'));
+            // Show target content
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+
+            // Update Buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            // (Simulate active button based on text match/order is cleaner with ID, but here simple:)
+            const tabs = document.querySelectorAll('.tab-btn');
+            if(tabName==='desc') tabs[0].classList.add('active');
+            if(tabName==='feat') tabs[1].classList.add('active');
+            if(tabName==='usage') tabs[2].classList.add('active');
+        }
+
+        function filterProducts(cat) {
+            renderProducts(cat);
+            // Update Active Button UI manually
+             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+             event.target.classList.add('active');
+        }
+
+        // Start
+        renderProducts('all');
+
+    </script>
 </body>
 </html>
