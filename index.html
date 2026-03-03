@@ -295,11 +295,65 @@
         </div>
       </div>
 
-      <div style="text-align: center; margin-top: 40px;">
-        <a href="https://line.me/ti/p/@realsmarthome" class="btn btn-outline" style="padding: 10px 30px;">
-          <i class="fa-brands fa-line" style="margin-right: 5px;"></i> ดูผลงานอัปเดตล่าสุดที่ LINE
-        </a>
-      </div>
+      <div class="portfolio-item hidden" onclick="openLightbox('images/port-03-26/port-07.JPG')">
+          <img src="images/port-03-26/port-07.JPG" alt="ผลงานติดตั้ง 07">
+          <div class="portfolio-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+
+        <div class="portfolio-item hidden" onclick="openLightbox('images/port-03-26/port-08.JPG')">
+          <img src="images/port-03-26/port-08.JPG" alt="ผลงานติดตั้ง 08">
+          <div class="portfolio-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+
+        <div class="portfolio-item hidden" onclick="openLightbox('images/port-03-26/port-09.JPG')">
+          <img src="images/port-03-26/port-09.JPG" alt="ผลงานติดตั้ง 09">
+          <div class="portfolio-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+
+        <div class="portfolio-item hidden" onclick="openLightbox('images/port-03-26/port-10.JPG')">
+          <img src="images/port-03-26/port-10.JPG" alt="ผลงานติดตั้ง 10">
+          <div class="portfolio-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+
+        <div class="portfolio-item hidden" onclick="openLightbox('images/port-03-26/port-11.JPG')">
+          <img src="images/port-03-26/port-11.JPG" alt="ผลงานติดตั้ง 11">
+          <div class="portfolio-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+
+        <div class="portfolio-item hidden" onclick="openLightbox('images/port-03-26/port-12.JPG')">
+          <img src="images/port-03-26/port-12.JPG" alt="ผลงานติดตั้ง 12">
+          <div class="portfolio-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+
+        <div class="portfolio-item hidden" onclick="openLightbox('images/port-03-26/port-13.JPG')">
+          <img src="images/port-03-26/port-13.JPG" alt="ผลงานติดตั้ง 13">
+          <div class="portfolio-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+
+        <div class="portfolio-item hidden" onclick="openLightbox('images/port-03-26/port-14.JPG')">
+          <img src="images/port-03-26/port-14.JPG" alt="ผลงานติดตั้ง 14">
+          <div class="portfolio-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+
+        <div class="portfolio-item hidden" onclick="openLightbox('images/port-03-26/port-15.JPG')">
+          <img src="images/port-03-26/port-15.JPG" alt="ผลงานติดตั้ง 15">
+          <div class="portfolio-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+
+        <div class="portfolio-item hidden" onclick="openLightbox('images/port-03-26/port-16.JPG')">
+          <img src="images/port-03-26/port-16.JPG" alt="ผลงานติดตั้ง 16">
+          <div class="portfolio-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+
+        <div class="portfolio-item hidden" onclick="openLightbox('images/port-03-26/port-17.JPG')">
+          <img src="images/port-03-26/port-17.JPG" alt="ผลงานติดตั้ง 17">
+          <div class="portfolio-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
+
+        <div class="portfolio-item hidden" onclick="openLightbox('images/port-03-26/port-18.JPG')">
+          <img src="images/port-03-26/port-18.JPG" alt="ผลงานติดตั้ง 18">
+          <div class="portfolio-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+        </div>
     </div>
   </section>
 
@@ -478,10 +532,25 @@
         document.getElementById('lightboxModal').style.display = 'none';
         document.body.style.overflow = 'auto'; // ปลดล็อกหน้าจอให้เลื่อนได้ปกติ
     }
+
+    // สคริปต์สำหรับปุ่ม "ดูผลงานเพิ่มเติม"
+    function loadMorePortfolio() {
+        // หาภาพที่ถูกซ่อนอยู่ทั้งหมด
+        const hiddenItems = document.querySelectorAll('.portfolio-item.hidden');
+        
+        // ลบคลาส hidden ออกเพื่อให้ภาพแสดงขึ้นมา
+        hiddenItems.forEach(item => {
+            item.classList.remove('hidden');
+        });
+
+        // ซ่อนปุ่ม "ดูผลงานเพิ่มเติม" ทิ้งไปเลยเมื่อกดแล้ว
+        document.getElementById('loadMoreContainer').style.display = 'none';
+    }
   </script>
 
 </body>
 </html>
+
 
 
 
