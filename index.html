@@ -20,7 +20,7 @@
         <li><a href="#about">เกี่ยวกับเรา</a></li>
         <li><a href="catalog.html">สินค้าเด่น</a></li>
         <li><a href="#strengths">จุดเด่น</a></li>
-        <li><a href="#services">บริการ</a></li>
+        <li><a href="#portfolio">ผลงานของเรา</a></li>
         <li><a href="quotation.html">ประเมินราคา</a></li>
       </ul>
 
@@ -107,6 +107,56 @@
     /* Responsive: จอเล็กปรับเป็น 2-3 คอลัมน์ */
     @media (max-width: 1024px) { .stats-grid { grid-template-columns: repeat(3, 1fr); } }
     @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* CSS สำหรับหน้า Gallery (ผลงาน) */
+    .portfolio { padding: 80px 0; background: #0a0a0a; /* ทำให้พื้นหลังเข้มขึ้นนิดนึงให้รูปเด่น */ }
+    .portfolio-grid { 
+        display: grid; 
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+        gap: 20px; 
+    }
+    .portfolio-item { 
+        position: relative; overflow: hidden; border-radius: 12px; 
+        cursor: pointer; aspect-ratio: 4/3; /* บังคับสัดส่วนรูปให้เท่ากันทุกใบ */
+        border: 1px solid #333; background: #1e1e1e;
+    }
+    .portfolio-item img { 
+        width: 100%; height: 100%; object-fit: cover; 
+        transition: transform 0.5s ease; 
+    }
+    .portfolio-overlay { 
+        position: absolute; inset: 0; background: rgba(0, 0, 0, 0.6); 
+        display: flex; align-items: center; justify-content: center; 
+        opacity: 0; transition: opacity 0.3s ease; 
+    }
+    .portfolio-overlay i { 
+        color: var(--accent-color); font-size: 2.5rem; 
+        transform: translateY(20px); transition: transform 0.3s ease; 
+    }
+    
+    /* Hover Effect */
+    .portfolio-item:hover img { transform: scale(1.1); }
+    .portfolio-item:hover .portfolio-overlay { opacity: 1; }
+    .portfolio-item:hover .portfolio-overlay i { transform: translateY(0); }
+
+    /* CSS สำหรับหน้าต่างโชว์รูปขยาย (Lightbox) */
+    .lightbox-modal { 
+        position: fixed; inset: 0; background: rgba(0,0,0,0.9); 
+        z-index: 9999; display: none; align-items: center; justify-content: center; 
+        padding: 20px; backdrop-filter: blur(5px); 
+    }
+    .lightbox-modal img { 
+        max-width: 90%; max-height: 90vh; border-radius: 8px; 
+        box-shadow: 0 0 30px rgba(0, 210, 255, 0.15); 
+        animation: zoomIn 0.3s ease;
+    }
+    @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    
+    .lightbox-close { 
+        position: absolute; top: 20px; right: 30px; 
+        color: #fff; font-size: 2.5rem; cursor: pointer; transition: 0.3s; 
+    }
+    .lightbox-close:hover { color: var(--accent-color); }
   </style>
 
   <div class="stats-container" style="max-width: 1200px; margin: 40px auto; padding: 20px;">
@@ -194,14 +244,69 @@
   </section>
 
   <!-- ✅ คุณมีเมนู #services แต่ยังไม่มี section นี้: ทำ placeholder กันคลิกลิงก์แล้วงง -->
-  <section class="target" id="services">
+  <section class="portfolio" id="portfolio">
     <div class="container">
-      <h2 class="section-title">บริการของเรา <span>(Services)</span></h2>
-      <p style="color: var(--text-secondary); max-width: 800px; margin: 0 auto;">
-        (กำลังจัดทำรายละเอียดบริการ) — ไฟอัจฉริยะ, ควบคุมแอร์, กล้องวงจรปิด, ประตู/รั้ว, เซ็นเซอร์, Automation & Scene
+      <h2 class="section-title">ผลงานติดตั้งของเรา <span>(Portfolio)</span></h2>
+      <p style="text-align: center; margin-bottom: 40px; color: var(--text-secondary); max-width: 700px; margin-left: auto; margin-right: auto;">
+        ภาพผลงานการออกแบบและติดตั้งระบบ Smart Home จากสถานที่จริง เราใส่ใจทุกรายละเอียดตั้งแต่การเดินสายไฟ เซ็ตอัประบบ จนถึงการสอนใช้งาน
       </p>
+
+      <div class="portfolio-grid">
+        <div class="portfolio-item" onclick="openLightbox('https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=800')">
+          <img src="https://images.unsplash.com/photo-1558002038-1055907df827?q=80&w=800" alt="ติดตั้งสวิตช์ไฟ">
+          <div class="portfolio-overlay">
+            <i class="fa-solid fa-magnifying-glass-plus"></i>
+          </div>
+        </div>
+
+        <div class="portfolio-item" onclick="openLightbox('https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=800')">
+          <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=800" alt="ติดตั้งระบบกล้อง">
+          <div class="portfolio-overlay">
+            <i class="fa-solid fa-magnifying-glass-plus"></i>
+          </div>
+        </div>
+
+        <div class="portfolio-item" onclick="openLightbox('https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=800')">
+          <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=800" alt="เซ็ตอัป Gateway">
+          <div class="portfolio-overlay">
+            <i class="fa-solid fa-magnifying-glass-plus"></i>
+          </div>
+        </div>
+
+        <div class="portfolio-item" onclick="openLightbox('https://images.unsplash.com/photo-1520699049698-acd2fce18736?q=80&w=800')">
+          <img src="https://images.unsplash.com/photo-1520699049698-acd2fce18736?q=80&w=800" alt="ติดตั้ง Digital Door Lock">
+          <div class="portfolio-overlay">
+            <i class="fa-solid fa-magnifying-glass-plus"></i>
+          </div>
+        </div>
+        
+        <div class="portfolio-item" onclick="openLightbox('https://images.unsplash.com/photo-1558021211-6d1403321394?q=80&w=800')">
+          <img src="https://images.unsplash.com/photo-1558021211-6d1403321394?q=80&w=800" alt="เดินสายไฟระบบ">
+          <div class="portfolio-overlay">
+            <i class="fa-solid fa-magnifying-glass-plus"></i>
+          </div>
+        </div>
+
+        <div class="portfolio-item" onclick="openLightbox('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800')">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800" alt="ส่งมอบงานลูกค้า">
+          <div class="portfolio-overlay">
+            <i class="fa-solid fa-magnifying-glass-plus"></i>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 40px;">
+        <a href="https://line.me/ti/p/@realsmarthome" class="btn btn-outline" style="padding: 10px 30px;">
+          <i class="fa-brands fa-line" style="margin-right: 5px;"></i> ดูผลงานอัปเดตล่าสุดที่ LINE
+        </a>
+      </div>
     </div>
   </section>
+
+  <div class="lightbox-modal" id="lightboxModal" onclick="closeLightbox(event)">
+    <span class="lightbox-close" onclick="closeLightboxBtn()">&times;</span>
+    <img src="" alt="ภาพขยาย" id="lightboxImg">
+  </div>
 
   <section class="target">
     <div class="container">
@@ -354,11 +459,30 @@
             document.getElementById('statsList').innerHTML = '';
         });
     }
-    
+
+    // สคริปต์ควบคุมการเปิด-ปิดรูปภาพขยาย (Lightbox)
+    function openLightbox(imgSrc) {
+        const lightbox = document.getElementById('lightboxModal');
+        const lightboxImg = document.getElementById('lightboxImg');
+        lightboxImg.src = imgSrc;
+        lightbox.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // ล็อกไม่ให้หน้าจอเลื่อนเวลาดูรูป
+    }
+
+    function closeLightbox(e) {
+        // ปิดเมื่อคลิกที่พื้นหลังสีดำ
+        if (e.target.id === 'lightboxModal') { closeLightboxBtn(); }
+    }
+
+    function closeLightboxBtn() {
+        document.getElementById('lightboxModal').style.display = 'none';
+        document.body.style.overflow = 'auto'; // ปลดล็อกหน้าจอให้เลื่อนได้ปกติ
+    }
   </script>
 
 </body>
 </html>
+
 
 
 
