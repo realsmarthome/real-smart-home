@@ -54,8 +54,21 @@
         .product-card:hover { transform: translateY(-5px); border-color: var(--accent-color); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
 
         .card-icon {
-            height: 180px; display: flex; align-items: center; justify-content: center;
-            background: #181818; color: #444; font-size: 5rem; transition: 0.3s;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #181818;
+            color: #444;
+            font-size: 5rem;
+            transition: 0.3s;
+            overflow: hidden; /* เพิ่มเพื่อให้รูปไม่ล้น */
+        }
+        /* เพิ่ม CSS สำหรับรูปภาพภายใน Card */
+        .card-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* ให้รูปเต็มกล่องโดยไม่เสียสัดส่วน */
         }
         .product-card:hover .card-icon { color: var(--accent-color); }
 
@@ -91,7 +104,23 @@
         .modal-header-section {
             padding: 30px; border-bottom: 1px solid #333; text-align: center; background: #2a2a2a;
         }
-        .modal-icon { font-size: 4rem; color: var(--accent-color); margin-bottom: 15px; }
+        .modal-icon {
+            width: 120px; /* กำหนดขนาดแน่นอน */
+            height: 120px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #181818;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .modal-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* ให้เห็นรูปครบถ้วนในหน้าต่าง Modal */
+        }    
         .modal-title { font-size: 1.5rem; font-weight: 600; margin-bottom: 5px; }
         .modal-price { color: var(--accent-color); font-size: 1.3rem; font-weight: bold; }
 
@@ -181,56 +210,67 @@
         // ข้อมูลสินค้า (จำลอง Database)
         const products = [
             {
-                id: 1, category: "light", icon: "fa-regular fa-lightbulb",
-                name: "สวิตช์ไฟอัจฉริยะ (Smart Switch)", price: 790,
-                desc: "เปลี่ยนสวิตช์เดิมให้สั่งงานผ่านมือถือได้ทันที ดีไซน์กระจกนิรภัยสวยหรู ทนทาน สัมผัสแม่นยำ มีไฟ LED บอกสถานะตอนกลางคืน",
-                features: ["กระจก Tempered Glass กันรอยขีดข่วน", "สั่งงานด้วยเสียง (Siri/Google/Alexa)", "ตั้งเวลาเปิด-ปิดอัตโนมัติ", "ไม่ต้องเดินสาย Neutral (รุ่น Capacitor)"],
-                usage: ["1. ตัดไฟบ้านเพื่อความปลอดภัย", "2. ต่อสาย L และ L1 เข้าช่องสวิตช์", "3. เปิดไฟ และกดปุ่มค้างไว้ 5 วิ เพื่อจับคู่"]
+                id: 1, 
+                category: "light", 
+                // แก้ไขบรรทัดนี้: ใส่ที่อยู่รูปภาพจาก GitHub ของคุณ
+                image: "images/port-03-26/port-08.JPG", 
+                name: "สวิตช์ไฟอัจฉริยะ (Smart Switch)", 
+                price: 790,
+                desc: "เปลี่ยนสวิตช์เดิมให้สั่งงานผ่านมือถือได้ทันที...",
+                features: ["...", "..."],
+                usage: ["...", "..."]
             },
             {
-                id: 4, category: "security", icon: "fa-solid fa-door-open",
+                id: 4, category: "security", 
+                image: "images/port-03-26/port-16.JPG",
                 name: "เซ็นเซอร์ประตู/หน้าต่าง", price: 320,
                 desc: "รู้ทันทีเมื่อมีใครเปิดประตูบ้าน แจ้งเตือนเข้ามือถือแบบ Real-time ขนาดเล็ก ติดตั้งง่ายไม่ต้องใช้เครื่องมือ",
                 features: ["แจ้งเตือนทันทีเมื่อประตูเปิด/ปิด", "ใช้เป็นตัวสั่งงาน Automation (เปิดประตู -> ไฟติด)", "แบตเตอรี่ใช้งานได้นาน 1-2 ปี", "ดูประวัติการเปิด-ปิดย้อนหลังได้"],
                 usage: ["1. ดึงแผ่นกั้นแบตเตอรี่ออก", "2. ติดกาว 3M ที่ประตูและวงกบ", "3. เชื่อมต่อเข้าแอปผ่าน Zigbee Gateway"]
             },
             {
-                id: 5, category: "security", icon: "fa-solid fa-person-rays",
+                id: 5, category: "security", 
+                image: "images/port-03-26/port-11.JPG",
                 name: "เซ็นเซอร์จับความเคลื่อนไหว", price: 340,
                 desc: "ตรวจจับการเคลื่อนไหวของคนหรือสัตว์เลี้ยง เหมาะสำหรับทำระบบกันขโมย หรือระบบไฟอัตโนมัติทางเดิน",
                 features: ["มุมตรวจจับกว้าง 170 องศา", "ระยะตรวจจับ 7 เมตร", "ปรับฐานหมุนได้อิสระ", "แจ้งเตือนเมื่อแบตเตอรี่ต่ำ"],
                 usage: ["1. วางหรือติดผนังในจุดที่ต้องการ", "2. เชื่อมต่อแอป", "3. ตั้งค่า Automation เช่น 'เจอคน -> เปิดไฟ'"]
             },
             {
-                id: 6, category: "light", icon: "fa-solid fa-restroom",
+                id: 6, category: "light", 
+                image: "images/port-03-26/port-12.JPG",
                 name: "ระบบไฟห้องน้ำอัตโนมัติ", price: 1290,
                 desc: "ชุดคิทพร้อมใช้สำหรับห้องน้ำ ไฟติดเองเมื่อเดินเข้า และดับเองเมื่อไม่มีคนอยู่ ไม่ต้องคลำหาสวิตช์ตอนมืด",
                 features: ["รวมเซ็นเซอร์และสวิตช์ในชุดเดียว", "หน่วงเวลาดับไฟได้ตามต้องการ", "ประหยัดไฟ ลืมปิดไฟก็ไม่เป็นไร"],
                 usage: ["ติดตั้งแทนสวิตช์ไฟหน้าห้องน้ำ และติดเซ็นเซอร์ไว้ในห้องน้ำ"]
             },
             {
-                id: 13, category: "control", icon: "fa-solid fa-network-wired",
+                id: 13, category: "control", 
+                image: "images/port-03-26/port-10.JPG",
                 name: "Zigbee Gateway (Hub)", price: 1890,
                 desc: "หัวใจสำคัญของบ้านอัจฉริยะ ทำหน้าที่เชื่อมต่ออุปกรณ์ Zigbee ทั้งหมดเข้ากับอินเทอร์เน็ต ทำให้ระบบเสถียรเน็ตล่มก็ยังทำงานได้",
                 features: ["รองรับอุปกรณ์ลูกได้สูงสุด 128 ตัว", "สัญญาณเสถียรกว่า Wi-Fi", "กินไฟน้อยมาก", "ขนาดเล็กกะทัดรัด"],
                 usage: ["เสียบสาย LAN เข้ากับ Router บ้าน และเสียบปลั๊กไฟ จากนั้นกดค้นหาในแอป"]
             },
             {
-                id: 15, category: "security", icon: "fa-solid fa-fingerprint",
+                id: 15, category: "security", 
+                image: "images/port-03-26/port-08.JPG",
                 name: "Digital Door Lock", price: 4900,
                 desc: "กลอนประตูดิจิตอล ปลดล็อกได้ 5 ระบบ (นิ้วมือ, รหัส, การ์ด, กุญแจ, แอป) หมดปัญหาลืมกุญแจบ้าน",
                 features: ["สแกนนิ้วแม่นยำ รวดเร็ว 0.3 วิ", "สร้างรหัสผ่านชั่วคราวให้แม่บ้านได้", "แจ้งเตือนเมื่อมีการงัดแงะ", "มีกุญแจสำรองฉุกเฉิน"],
                 usage: ["ติดตั้งแทนลูกบิดเดิม หรือติดเสริม (มีช่างแนะนำ)", "ตั้งค่าลายนิ้วมือผ่านตัวเครื่อง"]
             },
             {
-                id: 9, category: "security", icon: "fa-solid fa-video",
+                id: 9, category: "security", 
+                image: "images/port-03-26/port-15.JPG",
                 name: "กล้องวงจรปิดภายใน", price: 1890,
                 desc: "กล้องคมชัดระดับ 2K หมุนได้ 360 องศา พูดคุยโต้ตอบได้ มี AI ตรวจจับมนุษย์ แยกแยะคนกับสัตว์เลี้ยง",
                 features: ["ความละเอียด 3 ล้านพิกเซล", "โหมดกลางคืนชัดแจ๋ว", "บันทึกลง SD Card หรือ Cloud", "ดูพร้อมกันได้หลายจอ"],
                 usage: ["เสียบปลั๊ก วางบนโต๊ะหรือติดเพดาน เชื่อมต่อ Wi-Fi บ้าน"]
             },
             {
-                id: 7, category: "control", icon: "fa-regular fa-snowflake",
+                id: 7, category: "control", 
+                image: "images/port-03-26/port-10.JPG",
                 name: "IR Remote (แอร์/ทีวี)", price: 550,
                 desc: "เปลี่ยนแอร์เก่า ทีวีเก่า ให้เป็นรุ่นใหม่ สั่งงานผ่านมือถือได้ ควบคุมอุณหภูมิได้ก่อนถึงบ้าน",
                 features: ["รวมรีโมททุกตัวในบ้านไว้ในมือถือ", "สั่งงานด้วยเสียงได้", "ตั้งเวลาเปิด-ปิดแอร์"],
@@ -249,7 +289,7 @@
                 const html = `
                 <div class="product-card">
                     <div class="card-icon">
-                        <i class="${p.icon}"></i>
+                        <img src="${p.image}" alt="${p.name}" onerror="this.innerHTML='<i class=\'fa-solid fa-box\'></i>'">
                     </div>
                     <div class="card-body">
                         <div class="card-title">${p.name}</div>
@@ -282,7 +322,7 @@
             if(!product) return;
 
             // Fill Data
-            document.getElementById('mIcon').innerHTML = `<i class="${product.icon}"></i>`;
+            document.getElementById('mIcon').innerHTML = `<img src="${product.image}" alt="${product.name}">`;
             document.getElementById('mName').innerText = product.name;
             document.getElementById('mPrice').innerText = `฿${product.price.toLocaleString()}`;
             document.getElementById('tab-desc').innerText = product.desc;
@@ -338,3 +378,4 @@
     </script>
 </body>
 </html>
+
