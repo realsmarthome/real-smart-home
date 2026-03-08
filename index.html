@@ -78,10 +78,11 @@
   </section>
 
 <!-- ✅ stat from Google Sheet ------------->
-  <style>
+  
+  <style>/*
     .stats-grid {
         display: grid;
-        grid-template-columns: repeat(5, 1fr); /* แบ่งเป็น 5 คอลัมน์ */
+        grid-template-columns: repeat(5, 1fr); /* แบ่งเป็น 5 คอลัมน์ *
         gap: 15px;
     }
     
@@ -104,9 +105,10 @@
         box-shadow: 0 5px 15px rgba(0, 210, 255, 0.1);
     }
 
-    /* Responsive: จอเล็กปรับเป็น 2-3 คอลัมน์ */
+    /* Responsive: จอเล็กปรับเป็น 2-3 คอลัมน์ *
     @media (max-width: 1024px) { .stats-grid { grid-template-columns: repeat(3, 1fr); } }
-    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } } 
+    
 
     /* CSS สำหรับหน้า Gallery (ผลงาน) */
     .portfolio { padding: 80px 0; background: #0a0a0a; /* ทำให้พื้นหลังเข้มขึ้นนิดนึงให้รูปเด่น */ }
@@ -164,6 +166,7 @@
     }
   </style>
 
+  <!-- ซ่อน stat product *******
   <div class="stats-container" style="max-width: 1200px; margin: 40px auto; padding: 20px;">
       <h2 style="text-align: center; color: var(--accent-color); margin-bottom: 30px;">
           🔥 10 อันดับอุปกรณ์ยอดนิยม
@@ -173,7 +176,8 @@
               กำลังโหลดข้อมูล...
           </div>
       </div>
-  </div>
+  </div> 
+  -->
   
   <section class="philosophy">
     <div class="container">
@@ -464,8 +468,9 @@
     const scriptURL = 'https://script.google.com/macros/s/AKfycbzkOehJBDiiH7UwsMw1PpRCd__mZxVMQPrpswaEKKM6HLUe4AObXshAOCeQWDBrHJnEAQ/exec';
 
     // เรียกดึงข้อมูลทันทีที่เปิดหน้า
-    document.addEventListener('DOMContentLoaded', loadProductStats);
-
+    //document.addEventListener('DOMContentLoaded', loadProductStats);
+    
+    /*
     function loadProductStats() {
         fetch(scriptURL, {
             method: 'POST',
@@ -524,7 +529,7 @@
             document.getElementById('statsList').innerHTML = '';
         });
     }
-
+    */
     // สคริปต์ควบคุมการเปิด-ปิดรูปภาพขยาย (Lightbox)
     function openLightbox(imgSrc) {
         const lightbox = document.getElementById('lightboxModal');
@@ -561,6 +566,7 @@
 
 </body>
 </html>
+
 
 
 
