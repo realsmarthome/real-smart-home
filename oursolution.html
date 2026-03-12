@@ -225,58 +225,93 @@
         const solutionsData = {
             1: { 
                 title: "ระบบม่านไฟฟ้าเลื่อนปิดตรงกลาง", 
-                desc: "ม่านไฟฟ้าแบบเลื่อนซ้าย-ขวาติดตั้งที่หน้าต่างบานใหญ่ห้องนอนใหญ่ชั้นบน",
-                simHtml: `
-                    <div class="curtain-sim ${curtainClosed ? '' : 'closed'}" id="curtainSim">
-                        <div class="curtain-panel left"></div>
-                        <div class="curtain-panel right"></div>
-                        <div class="closed-middle-line"></div>
-                        <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#ccc; font-size: 0.9rem;">(จำลอง)</div>
-                    </div>
-                `,
-                controlsHtml: `
-                    <button class="sim-btn ${curtainClosed ? 'active' : ''}" onclick="toggleCurtainSim(true)">จำลองเลื่อนปิด</button>
-                    <button class="sim-btn ${!curtainClosed ? 'active' : ''}" onclick="toggleCurtainSim(false)">จำลองเลื่อนเปิด</button>
-                `
+                desc: "ชมวิดีโอสาธิตการทำงานจริงของม่านอัจฉริยะที่ติดตั้ง รองรับม่านหลายรูปแบบ",
+                // ใช้ YouTube Embed พร้อมตั้งค่าให้เล่นอัตโนมัติแบบปิดเสียง
+                videoHtml: `
+                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;">
+                        <iframe 
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                            src="https://www.youtube.com/embed/anGjhqLkP_s?autoplay=1&mute=1&loop=1&playlist=anGjhqLkP_s&controls=0" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>`
             },
             2: { 
-                title: "ไฟ RGB ห้องนั่งเล่น (Scene Control)", 
-                desc: "ห้องนั่งเล่นชั้นล่างติดตั้งทีวีขนาดใหญ่และระบบไฟ RGB สามารถปรับเปลี่ยนโหมดสีไฟได้ตามฉาก (Scene)",
-                simHtml: `
-                    <div class="rgb-sim ${rgbScene}" id="rgbSim">
-                        <div class="tv-screen-sim"></div>
-                         <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#ccc; font-size: 0.9rem;">(จำลอง TV + Glow)</div>
-                    </div>
-                `,
-                controlsHtml: `
-                    <button class="sim-btn ${rgbScene === 'movie' ? 'active' : ''}" onclick="setRGBSceneSim('movie')">Movie Scene (Cyan)</button>
-                    <button class="sim-btn ${rgbScene === 'relax' ? 'active' : ''}" onclick="setRGBSceneSim('relax')">Relax Scene (Orange)</button>
-                    <button class="sim-btn ${rgbScene === 'working' ? 'active' : ''}" onclick="setRGBSceneSim('working')">Working Scene (White)</button>
-                `
+                title: "ไฟ RGB ห้องนั่งเล่น เปลี่ยนสีตามโหมดภาพยนต์", 
+                desc: "ห้องนั่งเล่นชั้นล่างติดตั้งทีวีขนาดใหญ่และระบบไฟ RGB สามารถปรับเปลี่ยนโหมดสีไฟได้ตามบรรยากาศ",
+                // ใช้ YouTube Embed พร้อมตั้งค่าให้เล่นอัตโนมัติแบบปิดเสียง
+                videoHtml: `
+                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;">
+                        <iframe 
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                            src="https://www.youtube.com/watch?v=RFXhmR08K4c?autoplay=1&mute=1&loop=1&playlist=RFXhmR08K4c&controls=0" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>`
             },
             3: { 
-                title: "ระบบรดน้ำอัตโนมัติ (สวนหน้าบ้าน)", 
+                title: "ระบบรดน้ำอัตโนมัติ ประหยัดน้ำ เพราะสั่งรดน้ำตามความชื้น", 
                 desc: "สวนหน้าบ้านที่มีสนามหญ้าและต้นไม้ใหญ่ ติดตั้งระบบรดน้ำอัตโนมัติ เช็คความชื้นในดินและสั่งงานตามเวลา",
-                simHtml: `<div style="text-align:center; color:#888; display:flex; flex-direction:column; align-items:center; gap:10px;"><i class="fa-solid fa-faucet-drip" style="font-size:3rem; color: #0088ff;"></i><p>(สปริงเกลอร์รดน้ำ)</p></div>`,
-                controlsHtml: `<button class="sim-btn ${sprinklerOn ? 'active' : ''}" onclick="toggleSprinklerSim()">${sprinklerOn ? 'จำลองปิดรดน้ำ' : 'จำลองเปิดรดน้ำ'}</button>`
+                // ใช้ YouTube Embed พร้อมตั้งค่าให้เล่นอัตโนมัติแบบปิดเสียง
+                videoHtml: `
+                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;">
+                        <iframe 
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                            src="https://www.youtube.com/watch?v=bPJ02j2VHoc?autoplay=1&mute=1&loop=1&playlist=bPJ02j2VHoc&controls=0" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>`
             },
             4: { 
                 title: "ประตูรั้วบานเลื่อนไฟฟ้า", 
                 desc: "ประตูรั้วหน้าบ้านเป็นแบบบานเลื่อนไฟฟ้า สามารถควบคุมการเปิด-ปิดผ่านมือถือและดูผ่านกล้องวงจรปิด",
-                simHtml: `<div style="text-align:center; color:#888; display:flex; flex-direction:column; align-items:center; gap:10px;"><i class="fa-solid fa-gate" style="font-size:3rem; color: #00d2ff;"></i><p>(ประตูรั้วเลื่อน)</p></div>`,
-                controlsHtml: `<button class="sim-btn" onclick="alert('จำลองการสั่งเปิด/ปิดประตูรั้วแล้ว')">จำลองเลื่อนเปิด/ปิด</button>`
+               // ใช้ YouTube Embed พร้อมตั้งค่าให้เล่นอัตโนมัติแบบปิดเสียง
+                videoHtml: `
+                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;">
+                        <iframe 
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                            src="https://www.youtube.com/watch?v=P_IfMnEP4Gc?autoplay=1&mute=1&loop=1&playlist=P_IfMnEP4Gc&controls=0" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>`
             },
             5: { 
-                title: "เซ็นเซอร์ประตู/หน้าต่างแบบแนบเนียน", 
-                desc: "ติดตั้งเซ็นเซอร์ประตูและหน้าต่างในจุดที่มองไม่เห็น เพื่อความปลอดภัยโดยไม่บดบังความสวยงามของบ้าน",
-                simHtml: `<div style="text-align:center; color:#888; display:flex; flex-direction:column; align-items:center; gap:10px;"><i class="fa-solid fa-shield-halved" style="font-size:3rem; color: #ffbb00;"></i><p>(เซ็นเซอร์พร้อมตรวจจับ)</p></div>`,
-                controlsHtml: `<button class="sim-btn" onclick="alert('จำลองเหตุการณ์เปิดประตูแล้ว (แจ้งเตือนแล้ว)')">จำลองเปิดประตู (Alert)</button>`
+                title: "ระบบไฟอัตโนมัติ สะดวกสบายเดินไปไฟก็ติด ไม่ต้องเปิดที่สวิตช์", 
+                desc: "ติดตั้งเซ็นเซอร์ประตู/หน้าต่าง และเซ็นเซอร์ตรวจจับความเคลื่อนไหว เพื่อความปลอดภัย พร้อมสะดวกสบายในการสั่งไฟอัตโนมัติ",
+                // ใช้ YouTube Embed พร้อมตั้งค่าให้เล่นอัตโนมัติแบบปิดเสียง
+                videoHtml: `
+                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;">
+                        <iframe 
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                            src="https://www.youtube.com/watch?v=j_WITlt8IE4?autoplay=1&mute=1&loop=1&playlist=j_WITlt8IE4&controls=0" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>`
             },
             6: { 
                 title: "กล้องวงจรปิดติดตั้งอย่างสวยงาม", 
-                desc: "กล้องวงจรปิดติดตั้งอย่างลงตัว กลมกลืนไปกับงานออกแบบของบ้าน เพื่อความปลอดภัยรอบบ้าน",
-                simHtml: `<div style="text-align:center; color:#888; display:flex; flex-direction:column; align-items:center; gap:10px;"><i class="fa-solid fa-video" style="font-size:3rem; color: var(--accent);"></i><p>(กล้องตรวจจับใบหน้า)</p></div>`,
-                controlsHtml: `<button class="sim-btn" onclick="alert('จำลองการดู Live Stream แล้ว')">จำลองดูภาพสด (Live Stream)</button>`
+                desc: "กล้องที่มากกว่าการตรวจจับ ยังสามารถสั่งงานอุปกรณ์อื่นๆ ต่อได้ ไม่ว่าจะเป็นการสั่งเปิดไฟ หรือสั่งเปิดกริ่งเตือนภัย",
+                // ใช้ YouTube Embed พร้อมตั้งค่าให้เล่นอัตโนมัติแบบปิดเสียง
+                videoHtml: `
+                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;">
+                        <iframe 
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                            src="https://www.youtube.com/watch?v=YHGXs2Bl2qI?autoplay=1&mute=1&loop=1&playlist=YHGXs2Bl2qI&controls=0" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>`
             }
         };
 
@@ -408,6 +443,23 @@
             }
         }
 
+        function openModal(id) {
+            const data = solutionsData[id];
+            if (!data) return;
+        
+            modalTitle.innerText = data.title;
+            modalDesc.innerText = data.desc;
+            
+            // เปลี่ยนจากแสดงกราฟิก CSS เป็นแสดงวิดีโอที่เตรียมไว้
+            modalVisualSim.innerHTML = data.videoHtml; 
+            
+            // ส่วนปุ่มควบคุมถ้าไม่ใช้ก็สามารถสั่งซ่อนได้
+            modalSimControls.style.display = 'none'; 
+        
+            modal.style.display = 'flex';
+        }
+
     </script>
 </body>
 </html>
+
