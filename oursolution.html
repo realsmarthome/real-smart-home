@@ -172,3 +172,68 @@
             4: { 
                 title: "ประตูรั้วบานเลื่อนไฟฟ้า", 
                 desc: "เพิ่มความสะดวกและปลอดภัย สั่งเปิดประตูรั้วได้ตั้งแต่ยังไม่ถึงบ้าน พร้อมดูผ่านกล้องได้ทันที",
+                videoHtml: createYoutubeEmbed("P_IfMnEP4Gc")
+            },
+            5: { 
+                title: "ระบบไฟและเซ็นเซอร์อัตโนมัติ", 
+                desc: "ไฟติดเองเมื่อเดินผ่าน และระบบรักษาความปลอดภัยที่แจ้งเตือนทันทีเมื่อมีการบุกรุก",
+                videoHtml: createYoutubeEmbed("j_WITlt8IE4")
+            },
+            6: { 
+                title: "กล้องวงจรปิดอัจฉริยะ", 
+                desc: "กล้องที่มาพร้อม AI ตรวจจับคนแปลกหน้า และสามารถเชื่อมต่อสั่งงานอุปกรณ์อื่นในบ้านได้",
+                videoHtml: createYoutubeEmbed("YHGXs2Bl2qI")
+            }
+        };
+
+        // Helper ฟังก์ชันสำหรับสร้าง Embed Code ที่ถูกต้อง
+        function createYoutubeEmbed(videoId) {
+            return `
+                <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                    <iframe 
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                        src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=1" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>`;
+        }
+
+        const modal = document.getElementById('solutionModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalVisualSim = document.getElementById('modalVisualSim');
+        const modalDesc = document.getElementById('modalDesc');
+
+        function openModal(id) {
+            const data = solutionsData[id];
+            if (!data) return;
+            modalTitle.innerText = data.title;
+            modalDesc.innerText = data.desc;
+            modalVisualSim.innerHTML = data.videoHtml;
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(e) { if (e.target.id === 'solutionModal') closeModalBtn(); }
+        function closeModalBtn() {
+            modal.style.display = 'none';
+            modalVisualSim.innerHTML = ""; // หยุดวิดีโอเมื่อปิด popup
+            document.body.style.overflow = 'auto';
+        }
+
+        function setMode(mode) {
+            const body = document.body;
+            if(mode === 'night') {
+                body.classList.add('night-mode');
+                document.getElementById('nightBtn').classList.add('active');
+                document.getElementById('dayBtn').classList.remove('active');
+            } else {
+                body.classList.remove('night-mode');
+                document.getElementById('dayBtn').classList.add('active');
+                document.getElementById('nightBtn').classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>
