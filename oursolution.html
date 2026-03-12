@@ -25,11 +25,10 @@
         nav a:hover, nav a.active { color: var(--accent); }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; position: relative; }
-
         .header-section { text-align: center; margin-bottom: 50px; }
         .header-section h1 { font-size: 2.5rem; color: var(--accent); margin-bottom: 10px; }
 
-        /* Day/Night & Away Toggles */
+        /* Day/Night Toggles */
         .controls { display: flex; gap: 15px; margin-bottom: 20px; justify-content: center; }
         .toggle-btn {
             background: #222; border: 1px solid #444; color: #fff; padding: 10px 20px;
@@ -37,7 +36,7 @@
         }
         .toggle-btn.active { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 600; }
 
-        /* Interactive Blueprint Area */
+        /* Interactive Blueprint */
         .showcase-wrapper {
             position: relative;
             background: #151515;
@@ -49,7 +48,6 @@
             gap: 20px;
         }
 
-        /* House Visual Simulation (Using Provided Image) */
         .house-blueprint {
             position: relative;
             width: 100%;
@@ -57,27 +55,13 @@
             border-radius: 15px;
             overflow: hidden;
             border: 1px solid #333;
-            transition: 0.5s;
         }
         .house-blueprint img { width: 100%; height: auto; display: block; transition: filter 0.5s; }
 
-        /* Night Mode Effects for House Image */
+        /* Night Mode Effect */
         .night-mode .house-blueprint img { filter: brightness(0.3) contrast(1.1); }
-        .night-mode .house-blueprint::after {
-            content: '';
-            position: absolute;
-            top: 61%; /* RGB TV */
-            left: 23%;
-            width: 25%;
-            height: 15%;
-            background: rgba(0, 210, 255, 0.1); /* Movie Scene Color */
-            box-shadow: 0 0 50px 20px rgba(0, 210, 255, 0.1);
-            border-radius: 10px;
-            pointer-events: none;
-            transition: 0.5s;
-        }
 
-        /* Hotspots (Pulsing Circles) */
+        /* Hotspots */
         .hotspot {
             position: absolute;
             width: 30px;
@@ -91,12 +75,8 @@
             cursor: pointer;
             animation: pulse 2s infinite;
             z-index: 10;
-            transition: 0.3s;
             color: var(--accent);
-            font-size: 0.9rem;
         }
-        .hotspot:hover { transform: scale(1.3); background: #fff; color: #000; box-shadow: 0 0 15px #fff; }
-
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0px rgba(0, 210, 255, 0.7); }
             70% { box-shadow: 0 0 0 15px rgba(0, 210, 255, 0); }
@@ -110,58 +90,19 @@
             z-index: 2000; backdrop-filter: blur(5px);
         }
         .modal-content {
-            background: var(--card-bg); width: 100%; max-width: 600px;
+            background: var(--card-bg); width: 100%; max-width: 700px;
             border-radius: 15px; overflow: hidden; border: 1px solid #333;
             position: relative; animation: slideUp 0.3s ease;
         }
         @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        .modal-header {
-            padding: 20px; border-bottom: 1px solid #333; text-align: center;
-            display: flex; align-items: center; justify-content: space-between;
-        }
-        .modal-title { font-size: 1.3rem; font-weight: 600; color: var(--accent); }
-        .close-modal { font-size: 1.5rem; color: #888; cursor: pointer; transition: 0.3s; }
-        .close-modal:hover { color: #fff; }
+        .modal-header { padding: 20px; border-bottom: 1px solid #333; display: flex; align-items: center; justify-content: space-between; }
+        .modal-title { font-size: 1.2rem; font-weight: 600; color: var(--accent); }
+        .close-modal { font-size: 1.5rem; color: #888; cursor: pointer; }
 
-        .modal-body { padding: 30px; display: flex; flex-direction: column; gap: 20px; }
-        
-        /* Modal Visual Simulation (Simplified Graphic inside Modal) */
-        .modal-visual-sim {
-            width: 100%; height: 200px; background: #111; border-radius: 10px;
-            border: 1px solid #333; overflow: hidden; position: relative;
-            display: flex; align-items: center; justify-content: center;
-        }
-
-        /* 1. Curtain Sim */
-        .curtain-sim { width: 100%; height: 100%; position: relative; }
-        .curtain-panel { position: absolute; top: 0; bottom: 0; width: 50%; background: #555; transition: width 0.5s; border: 1px solid #333; }
-        .curtain-panel.left { left: 0; border-radius: 5px 0 0 5px; }
-        .curtain-panel.right { right: 0; border-radius: 0 5px 5px 0; }
-        .closed .curtain-panel.left { width: 0; }
-        .closed .curtain-panel.right { width: 0; }
-        .closed-middle-line { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #111; transform: translateX(-50%); display: none; }
-        .closed .closed-middle-line { display: block; }
-
-        /* 2. RGB Sim */
-        .rgb-sim { width: 100%; height: 100%; background: black; display: flex; align-items: center; justify-content: center; position: relative;}
-        .tv-screen-sim { width: 60%; height: 60%; background: #000; border: 2px solid #222; border-radius: 5px; box-shadow: 0 0 20px rgba(0, 0, 0, 0); transition: 0.5s; }
-        .rgb-sim::after { content: ''; position: absolute; inset: 0; border-radius: 10px; background: rgba(0,0,0,0.5); pointer-events: none;} /* Simulates ambient light */
-        .movie .tv-screen-sim { box-shadow: 0 0 30px rgba(0, 210, 255, 0.7); }
-        .relax .tv-screen-sim { box-shadow: 0 0 30px rgba(255, 100, 0, 0.7); }
-        .working .tv-screen-sim { box-shadow: 0 0 30px rgba(255, 255, 255, 0.7); }
-
+        .modal-body { padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+        .modal-visual-sim { width: 100%; border-radius: 10px; overflow: hidden; background: #000; }
         .modal-desc { color: var(--text-dim); line-height: 1.6; font-size: 0.95rem; text-align: center; }
-
-        /* Modal Interaction Controls */
-        .modal-sim-controls { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 10px; }
-        .sim-btn {
-            background: #222; border: 1px solid #444; color: #fff; padding: 8px 15px;
-            border-radius: 5px; cursor: pointer; transition: 0.3s; font-family: 'Prompt'; font-size: 0.8rem;
-        }
-        .sim-btn:hover { background: #333; border-color: var(--accent); }
-        .sim-btn.active { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 600; }
-
     </style>
 </head>
 <body class="day-mode">
@@ -176,12 +117,12 @@
     <div class="container">
         <div class="header-section">
             <h1>Interactive Smart House Blueprint</h1>
-            <p>คลิกที่จุด Hotspots บนแบบบ้าน เพื่อจำลองการทำงานของระบบอัจฉริยะในแต่ละจุด</p>
+            <p>คลิกที่จุด Hotspots บนแบบบ้าน เพื่อชมวิดีโอการทำงานของระบบอัจฉริยะ</p>
         </div>
 
         <div class="showcase-wrapper">
-            <div class="house-blueprint" id="houseBlueprint">
-                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200" alt="แบบบ้านอัจฉริยะ 2 ชั้น">
+            <div class="house-blueprint">
+                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200" alt="แบบบ้านอัจฉริยะ">
 
                 <div class="hotspot" style="top: 24%; left: 47%;" onclick="openModal(1)"><i class="fa-solid fa-scroll"></i></div>
                 <div class="hotspot" style="top: 63%; left: 25%;" onclick="openModal(2)"><i class="fa-solid fa-lightbulb"></i></div>
@@ -192,8 +133,8 @@
             </div>
 
              <div class="controls">
-                <button class="toggle-btn active" id="dayBtn" onclick="setMode('day')"><i class="fa-solid fa-sun"></i> ☀️ Day Mode</button>
-                <button class="toggle-btn" id="nightBtn" onclick="setMode('night')"><i class="fa-solid fa-moon"></i> 🌙 Night Mode</button>
+                <button class="toggle-btn active" id="dayBtn" onclick="setMode('day')"><i class="fa-solid fa-sun"></i> Day Mode</button>
+                <button class="toggle-btn" id="nightBtn" onclick="setMode('night')"><i class="fa-solid fa-moon"></i> Night Mode</button>
             </div>
         </div>
     </div>
@@ -205,263 +146,29 @@
                 <span class="close-modal" onclick="closeModalBtn()">&times;</span>
             </div>
             <div class="modal-body">
-                <div class="modal-visual-sim" id="modalVisualSim">
-                    </div>
-
+                <div class="modal-visual-sim" id="modalVisualSim"></div>
                 <p class="modal-desc" id="modalDesc">รายละเอียดการทำงาน...</p>
-                
-                <div class="modal-sim-controls" id="modalSimControls">
-                    </div>
             </div>
         </div>
     </div>
 
     <script>
-        // ข้อมูลจำลองสถานะการทำงานของระบบ (Simulation States)
-        let curtainClosed = true; // ม่านเริ่มที่สถานะปิด
-        let rgbScene = 'movie'; // ฉากไฟเริ่มที่โหมดดูหนัง
-        let sprinklerOn = false; // สปริงเกลอร์เริ่มที่ปิด
-
         const solutionsData = {
             1: { 
                 title: "ระบบม่านไฟฟ้าเลื่อนปิดตรงกลาง", 
-                desc: "ชมวิดีโอสาธิตการทำงานจริงของม่านอัจฉริยะที่ติดตั้ง รองรับม่านหลายรูปแบบ",
-                // ใช้ YouTube Embed พร้อมตั้งค่าให้เล่นอัตโนมัติแบบปิดเสียง
-                videoHtml: `
-                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;">
-                        <iframe 
-                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
-                            src="https://www.youtube.com/embed/anGjhqLkP_s?autoplay=1&mute=1&loop=1&playlist=anGjhqLkP_s&controls=0" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                        </iframe>
-                    </div>`
+                desc: "วิดีโอสาธิตการทำงานจริงของม่านอัจฉริยะ สะดวกสบาย สั่งงานผ่านมือถือหรือเสียง",
+                videoHtml: createYoutubeEmbed("anGjhqLkP_s")
             },
             2: { 
-                title: "ไฟ RGB ห้องนั่งเล่น เปลี่ยนสีตามโหมดภาพยนต์", 
-                desc: "ห้องนั่งเล่นชั้นล่างติดตั้งทีวีขนาดใหญ่และระบบไฟ RGB สามารถปรับเปลี่ยนโหมดสีไฟได้ตามบรรยากาศ",
-                // ใช้ YouTube Embed พร้อมตั้งค่าให้เล่นอัตโนมัติแบบปิดเสียง
-                videoHtml: `
-                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;">
-                        <iframe 
-                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
-                            src="https://www.youtube.com/watch?v=RFXhmR08K4c?autoplay=1&mute=1&loop=1&playlist=RFXhmR08K4c&controls=0" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                        </iframe>
-                    </div>`
+                title: "ไฟ RGB ห้องนั่งเล่น (Ambient Light)", 
+                desc: "ปรับเปลี่ยนบรรยากาศห้องนั่งเล่นให้เหมาะกับการดูหนัง หรือพักผ่อนด้วยไฟ RGB อัจฉริยะ",
+                videoHtml: createYoutubeEmbed("RFXhmR08K4c")
             },
             3: { 
-                title: "ระบบรดน้ำอัตโนมัติ ประหยัดน้ำ เพราะสั่งรดน้ำตามความชื้น", 
-                desc: "สวนหน้าบ้านที่มีสนามหญ้าและต้นไม้ใหญ่ ติดตั้งระบบรดน้ำอัตโนมัติ เช็คความชื้นในดินและสั่งงานตามเวลา",
-                // ใช้ YouTube Embed พร้อมตั้งค่าให้เล่นอัตโนมัติแบบปิดเสียง
-                videoHtml: `
-                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;">
-                        <iframe 
-                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
-                            src="https://www.youtube.com/watch?v=bPJ02j2VHoc?autoplay=1&mute=1&loop=1&playlist=bPJ02j2VHoc&controls=0" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                        </iframe>
-                    </div>`
+                title: "ระบบรดน้ำอัตโนมัติอัจฉริยะ", 
+                desc: "รดน้ำต้นไม้ตามค่าความชื้นในดินจริง ประหยัดน้ำและดูแลสวนให้เขียวขจีตลอดเวลา",
+                videoHtml: createYoutubeEmbed("bPJ02j2VHoc")
             },
             4: { 
                 title: "ประตูรั้วบานเลื่อนไฟฟ้า", 
-                desc: "ประตูรั้วหน้าบ้านเป็นแบบบานเลื่อนไฟฟ้า สามารถควบคุมการเปิด-ปิดผ่านมือถือและดูผ่านกล้องวงจรปิด",
-               // ใช้ YouTube Embed พร้อมตั้งค่าให้เล่นอัตโนมัติแบบปิดเสียง
-                videoHtml: `
-                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;">
-                        <iframe 
-                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
-                            src="https://www.youtube.com/watch?v=P_IfMnEP4Gc?autoplay=1&mute=1&loop=1&playlist=P_IfMnEP4Gc&controls=0" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                        </iframe>
-                    </div>`
-            },
-            5: { 
-                title: "ระบบไฟอัตโนมัติ สะดวกสบายเดินไปไฟก็ติด ไม่ต้องเปิดที่สวิตช์", 
-                desc: "ติดตั้งเซ็นเซอร์ประตู/หน้าต่าง และเซ็นเซอร์ตรวจจับความเคลื่อนไหว เพื่อความปลอดภัย พร้อมสะดวกสบายในการสั่งไฟอัตโนมัติ",
-                // ใช้ YouTube Embed พร้อมตั้งค่าให้เล่นอัตโนมัติแบบปิดเสียง
-                videoHtml: `
-                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;">
-                        <iframe 
-                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
-                            src="https://www.youtube.com/watch?v=j_WITlt8IE4?autoplay=1&mute=1&loop=1&playlist=j_WITlt8IE4&controls=0" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                        </iframe>
-                    </div>`
-            },
-            6: { 
-                title: "กล้องวงจรปิดติดตั้งอย่างสวยงาม", 
-                desc: "กล้องที่มากกว่าการตรวจจับ ยังสามารถสั่งงานอุปกรณ์อื่นๆ ต่อได้ ไม่ว่าจะเป็นการสั่งเปิดไฟ หรือสั่งเปิดกริ่งเตือนภัย",
-                // ใช้ YouTube Embed พร้อมตั้งค่าให้เล่นอัตโนมัติแบบปิดเสียง
-                videoHtml: `
-                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;">
-                        <iframe 
-                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
-                            src="https://www.youtube.com/watch?v=YHGXs2Bl2qI?autoplay=1&mute=1&loop=1&playlist=YHGXs2Bl2qI&controls=0" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                        </iframe>
-                    </div>`
-            }
-        };
-
-        // Modal Controls
-        const modal = document.getElementById('solutionModal');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalVisualSim = document.getElementById('modalVisualSim');
-        const modalDesc = document.getElementById('modalDesc');
-        const modalSimControls = document.getElementById('modalSimControls');
-
-        function openModal(id) {
-            const data = solutionsData[id];
-            if (!data) return;
-
-            // Load Data into Modal
-            modalTitle.innerText = data.title;
-            //modalVisualSim.innerHTML = data.simHtml; กราฟฟิค
-            modalVisualSim.innerHTML = data.videoHtml;
-            modalDesc.innerText = data.desc;
-            modalSimControls.innerHTML = data.controlsHtml;
-
-            // Show Modal
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // Lock scrolling
-        }
-
-        function closeModal(e) {
-            if (e.target.id === 'solutionModal') {
-                closeModalBtn();
-            }
-        }
-        function closeModalBtn() {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto'; // Unlock scrolling
-        }
-
-        // Simulation Interactions (Inside Modal)
-        function toggleCurtainSim(targetClosed) {
-            const sim = document.getElementById('curtainSim');
-            curtainClosed = targetClosed;
-            if (curtainClosed) {
-                sim.classList.remove('closed'); // Start closing animation (via CSS transitions from full width to narrow full width in central position)
-                 sim.style.width = "100%"; // Set back to full width
-                solutionsData[1].simHtml = `
-                    <div class="curtain-sim" id="curtainSim">
-                        <div class="curtain-panel left"></div>
-                        <div class="curtain-panel right"></div>
-                        <div class="closed-middle-line"></div>
-                         <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#ccc; font-size: 0.9rem;">(จำลอง)</div>
-                    </div>
-                `;
-            } else {
-                 sim.classList.add('closed'); // Start opening animation (via CSS transitions from Central position to open towards sides)
-                  solutionsData[1].simHtml = `
-                    <div class="curtain-sim closed" id="curtainSim">
-                        <div class="curtain-panel left"></div>
-                        <div class="curtain-panel right"></div>
-                        <div class="closed-middle-line"></div>
-                         <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#ccc; font-size: 0.9rem;">(จำลอง)</div>
-                    </div>
-                `;
-            }
-
-            // Update description and buttons in modal dynamically
-            modalVisualSim.innerHTML = solutionsData[1].simHtml;
-             modalSimControls.innerHTML = `
-                <button class="sim-btn ${curtainClosed ? 'active' : ''}" onclick="toggleCurtainSim(true)">จำลองเลื่อนปิด</button>
-                <button class="sim-btn ${!curtainClosed ? 'active' : ''}" onclick="toggleCurtainSim(false)">จำลองเลื่อนเปิด</button>
-            `;
-        }
-
-        function setRGBSceneSim(scene) {
-            const sim = document.getElementById('rgbSim');
-            rgbScene = scene;
-            
-            sim.className = `rgb-sim ${rgbScene}`; // Set class to apply glow and brightness
-             
-             // Update Data
-            solutionsData[2].simHtml = `
-                <div class="rgb-sim ${rgbScene}" id="rgbSim">
-                    <div class="tv-screen-sim"></div>
-                     <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#ccc; font-size: 0.9rem;">(จำลอง TV + Glow)</div>
-                </div>
-            `;
-             modalVisualSim.innerHTML = solutionsData[2].simHtml;
-            modalSimControls.innerHTML = `
-                <button class="sim-btn ${rgbScene === 'movie' ? 'active' : ''}" onclick="setRGBSceneSim('movie')">Movie Scene (Cyan)</button>
-                <button class="sim-btn ${rgbScene === 'relax' ? 'active' : ''}" onclick="setRGBSceneSim('relax')">Relax Scene (Orange)</button>
-                <button class="sim-btn ${rgbScene === 'working' ? 'active' : ''}" onclick="setRGBSceneSim('working')">Working Scene (White)</button>
-            `;
-        }
-
-        function toggleSprinklerSim() {
-             sprinklerOn = !sprinklerOn;
-              
-              if(sprinklerOn) {
-                  solutionsData[3].simHtml = `<div style="text-align:center; color:#888; display:flex; flex-direction:column; align-items:center; gap:10px;"><i class="fa-solid fa-faucet-drip" style="font-size:3rem; color: #00d2ff; animation: sprinkle 1s infinite;"></i><p>(สปริงเกลอร์กำลังรดน้ำ)</p></div>`;
-              } else {
-                  solutionsData[3].simHtml = `<div style="text-align:center; color:#888; display:flex; flex-direction:column; align-items:center; gap:10px;"><i class="fa-solid fa-faucet-drip" style="font-size:3rem; color: #0088ff;"></i><p>(สปริงเกลอร์รดน้ำ)</p></div>`;
-              }
-              modalVisualSim.innerHTML = solutionsData[3].simHtml;
-              modalSimControls.innerHTML = `<button class="sim-btn ${sprinklerOn ? 'active' : ''}" onclick="toggleSprinklerSim()">${sprinklerOn ? 'จำลองปิดรดน้ำ' : 'จำลองเปิดรดน้ำ'}</button>`;
-        }
-
-        // Add sprinkle animation (Used only dynamically, so we can define it here via JS style insertion)
-        const styleSheet = document.createElement("style");
-        styleSheet.type = "text/css";
-        styleSheet.innerText = `
-            @keyframes sprinkle {
-                0% { transform: translateY(0) rotate(0deg); opacity: 0.5; }
-                50% { transform: translateY(-3px) rotate(10deg); opacity: 1; }
-                100% { transform: translateY(0) rotate(0deg); opacity: 0.5; }
-            }
-        `;
-        document.head.appendChild(styleSheet);
-
-
-        // Floor Swapping Logic (Original functionality from previous oursolution idea, adapted for Day/Night toggle)
-        function setMode(mode) {
-            const body = document.body;
-            
-            if(mode === 'night') {
-                body.classList.add('night-mode');
-                document.getElementById('nightBtn').classList.add('active');
-                document.getElementById('dayBtn').classList.remove('active');
-            } else {
-                body.classList.remove('night-mode');
-                document.getElementById('dayBtn').classList.add('active');
-                document.getElementById('nightBtn').classList.remove('active');
-            }
-        }
-
-        function openModal(id) {
-            const data = solutionsData[id];
-            if (!data) return;
-        
-            modalTitle.innerText = data.title;
-            modalDesc.innerText = data.desc;
-            
-            // เปลี่ยนจากแสดงกราฟิก CSS เป็นแสดงวิดีโอที่เตรียมไว้
-            modalVisualSim.innerHTML = data.videoHtml; 
-            
-            // ส่วนปุ่มควบคุมถ้าไม่ใช้ก็สามารถสั่งซ่อนได้
-            modalSimControls.style.display = 'none'; 
-        
-            modal.style.display = 'flex';
-        }
-
-    </script>
-</body>
-</html>
-
-
+                desc: "เพิ่มความสะดวกและปลอดภัย สั่งเปิดประตูรั้วได้ตั้งแต่ยังไม่ถึงบ้าน พร้อมดูผ่านกล้องได้ทันที",
