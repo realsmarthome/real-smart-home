@@ -118,7 +118,8 @@
     <div class="container">            
         <div class="header-section">
             <h1>จะดีแค่ไหน... ถ้าบ้านของคุณ "มีชีวิต" และคอยดูแลคุณ?</h1>
-            <p style="color: var(--text-dim);">สัมผัสประสบการณ์ <strong>"บ้านที่เข้าใจคุณ"</strong> เปลี่ยนบ้านของคุณ ให้กลายเป็นพื้นที่แห่งความปลอดภัยและสะดวกสบายขั้นสุด</p>
+            <p>สัมผัสประสบการณ์ <strong>"บ้านที่เข้าใจคุณ"</strong> เปลี่ยนบ้านของคุณ ให้กลายเป็นพื้นที่แห่งความปลอดภัยและสะดวกสบายขั้นสุด</p>
+            <p></p>
             <p>คลิกที่จุด Hotspots บนแบบบ้าน เพื่อชมวิดีโอการทำงานของระบบอัจฉริยะ</p>
         </div>
 
@@ -133,11 +134,7 @@
                 <div class="hotspot" style="top: 60%; left: 78%;" onclick="openModal(5)"><i class="fa-solid fa-shield-halved"></i></div>
                 <div class="hotspot" style="top: 44%; left: 76%;" onclick="openModal(6)"><i class="fa-solid fa-video"></i></div>
             </div>
-
-             <div class="controls">
-                <button class="toggle-btn active" id="dayBtn" onclick="setMode('day')"><i class="fa-solid fa-sun"></i> Day Mode</button>
-                <button class="toggle-btn" id="nightBtn" onclick="setMode('night')"><i class="fa-solid fa-moon"></i> Night Mode</button>
-            </div>
+             
         </div>
     </div>
 
@@ -200,31 +197,6 @@
         </div>
     </section>
 
-    
-    <section style="padding: 80px 20px; background: #0f0f0f; border-top: 1px solid #333;">
-        <div style="max-width: 1100px; margin: 0 auto;">
-            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 50px;">
-                <div style="flex: 1; min-width: 300px;">
-                    <h2 style="color: var(--accent); margin-bottom: 20px;">All-in-One Smart Package</h2>
-                    <p style="color: #888; margin-bottom: 30px;">ชุดอุปกรณ์มาตรฐานพรีเมียม ครบจบสำหรับบ้าน 3 นอน 3 น้ำ</p>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                        <div style="background: #1a1a1a; padding: 15px; border-radius: 10px;"><i class="fa-solid fa-video" style="color: var(--accent);"></i> กล้องอัจฉริยะ 4 จุด</div>
-                        <div style="background: #1a1a1a; padding: 15px; border-radius: 10px;"><i class="fa-solid fa-toggle-on" style="color: var(--accent);"></i> สวิตช์ 9 ช่องไฟ</div>
-                        <div style="background: #1a1a1a; padding: 15px; border-radius: 10px;"><i class="fa-solid fa-sensor" style="color: var(--accent);"></i> เซ็นเซอร์ 8 จุด</div>
-                        <div style="background: #1a1a1a; padding: 15px; border-radius: 10px;"><i class="fa-solid fa-fingerprint" style="color: var(--accent);"></i> Digital Door Lock</div>
-                        <div style="background: #1a1a1a; padding: 15px; border-radius: 10px;"><i class="fa-solid fa-wind" style="color: var(--accent);"></i> Smart IR คุมแอร์/ทีวี</div>
-                    </div>
-                </div>
-                <div style="flex: 1; min-width: 300px; text-align: center; background: linear-gradient(135deg, #1a1a1a 0%, #222 100%); padding: 50px; border-radius: 30px; border: 2px solid var(--accent);">
-                    <h3 style="color: #fff; margin-bottom: 20px;">พร้อมอัปเกรดบ้านของคุณหรือยัง?</h3>
-                    <p style="color: #888; margin-bottom: 30px;">ราคาเดียวจบ ดูแลคุณและคนที่คุณรักได้ตั้งแต่วันแรกที่ติดตั้ง</p>
-                    <a href="quotation.html" style="background: var(--accent); color: #000; padding: 15px 40px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 1.1rem; display: inline-block;">เริ่มประเมินราคาฟรี</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    
     <section class="comparison-section" style="padding: 60px 20px; background: #111;">
         <div style="max-width: 1000px; margin: 0 auto;">
             <h2 style="text-align: center; color: var(--accent); margin-bottom: 40px;">เปลี่ยนบ้านแบบเดิม เป็นบ้านที่ดูแลคุณ</h2>
@@ -251,6 +223,31 @@
         </div>
     </section>
 
+    
+    <section style="padding: 80px 20px; background: #0f0f0f; border-top: 1px solid #333;">
+        <div style="max-width: 1100px; margin: 0 auto;">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 50px;">
+                <div style="flex: 1; min-width: 300px;">
+                    <h2 style="color: var(--accent); margin-bottom: 20px;">All-in-One Smart Package</h2>
+                    <p style="color: #888; margin-bottom: 30px;">ชุดอุปกรณ์มาตรฐานพรีเมียม ครบจบสำหรับบ้าน 3 นอน 3 น้ำ</p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div style="background: #1a1a1a; padding: 15px; border-radius: 10px;"><i class="fa-solid fa-video" style="color: var(--accent);"></i> กล้องอัจฉริยะ 4 จุด</div>
+                        <div style="background: #1a1a1a; padding: 15px; border-radius: 10px;"><i class="fa-solid fa-toggle-on" style="color: var(--accent);"></i> สวิตช์ 9 ช่องไฟ</div>
+                        <div style="background: #1a1a1a; padding: 15px; border-radius: 10px;"><i class="fa-solid fa-sensor" style="color: var(--accent);"></i> เซ็นเซอร์ 8 จุด</div>
+                        <div style="background: #1a1a1a; padding: 15px; border-radius: 10px;"><i class="fa-solid fa-fingerprint" style="color: var(--accent);"></i> Digital Door Lock</div>
+                        <div style="background: #1a1a1a; padding: 15px; border-radius: 10px;"><i class="fa-solid fa-wind" style="color: var(--accent);"></i> Smart IR คุมแอร์/ทีวี</div>
+                    </div>
+                </div>
+                <div style="flex: 1; min-width: 300px; text-align: center; background: linear-gradient(135deg, #1a1a1a 0%, #222 100%); padding: 50px; border-radius: 30px; border: 2px solid var(--accent);">
+                    <h3 style="color: #fff; margin-bottom: 20px;">พร้อมอัปเกรดบ้านของคุณหรือยัง?</h3>
+                    <p style="color: #888; margin-bottom: 30px;">ราคาเดียวจบ ดูแลคุณและคนที่คุณรักได้ตั้งแต่วันแรกที่ติดตั้ง</p>
+                    <a href="quotation.html" style="background: var(--accent); color: #000; padding: 15px 40px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 1.1rem; display: inline-block;">เริ่มประเมินราคาฟรี</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
     <script>
         const solutionsData = {
             1: { 
