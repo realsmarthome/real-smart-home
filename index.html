@@ -516,73 +516,7 @@
     });
 
     // **********************************************
-    // ใส่ URL Google Apps Script ของคุณที่นี่
-    // **********************************************
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzkOehJBDiiH7UwsMw1PpRCd__mZxVMQPrpswaEKKM6HLUe4AObXshAOCeQWDBrHJnEAQ/exec';
-
-    // เรียกดึงข้อมูลทันทีที่เปิดหน้า
-    //document.addEventListener('DOMContentLoaded', loadProductStats);
     
-    /*
-    function loadProductStats() {
-        fetch(scriptURL, {
-            method: 'POST',
-            body: JSON.stringify({ action: 'get_product_stats' })
-        })
-        .then(response => response.json())
-        .then(res => {
-            const list = document.getElementById('statsList');
-            if (res.status === 'success' && res.data.length > 0) {
-                let html = '';
-                
-                // ✅ ตัดมาแค่ 10 อันดับแรก (Top 10)
-                const top10 = res.data.slice(0, 10);
-                
-                // หาค่ามากสุดเพื่อคำนวณความยาวหลอดพลัง
-                const maxCount = top10[0].count; 
-
-                top10.forEach((item, index) => {
-                    // กำหนดไอคอนและสีขอบตามอันดับ
-                    let rankIcon = `<span style="font-size: 1.2rem; font-weight: bold; color: #555;">#${index+1}</span>`;
-                    let borderColor = '#333';
-                    let iconSize = '2rem';
-                    
-                    if (index === 0) { rankIcon = '🥇'; borderColor = '#FFD700'; iconSize = '2.5rem'; }
-                    else if (index === 1) { rankIcon = '🥈'; borderColor = '#C0C0C0'; iconSize = '2.5rem'; }
-                    else if (index === 2) { rankIcon = '🥉'; borderColor = '#CD7F32'; iconSize = '2.5rem'; }
-
-                    let barPercent = (item.count / maxCount) * 100;
-
-                    html += `
-                    <div class="stat-card" style="border-top: 3px solid ${borderColor};">
-                        <div style="font-size: ${iconSize}; margin-bottom: 5px;">${rankIcon}</div>
-                        
-                        <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; margin-bottom: 10px;">
-                            <div style="font-size: 0.85rem; color: #ddd; margin-bottom: 5px; min-height: 40px; display: flex; align-items: center; justify-content: center; line-height: 1.3;">
-                                ${item.name}
-                            </div>
-                            <div style="font-size: 1.3rem; font-weight: bold; color: var(--accent-color);">
-                                ${item.count}
-                            </div>
-                            <div style="font-size: 0.7rem; color: #666;">รายการ</div>
-                        </div>
-
-                        <div style="width: 100%; background: #333; height: 4px; border-radius: 2px;">
-                            <div style="background: var(--accent-color); width: ${barPercent}%; height: 100%; border-radius: 2px;"></div>
-                        </div>
-                    </div>`;
-                });
-                list.innerHTML = html;
-            } else {
-                list.innerHTML = '<div style="grid-column: 1/-1; text-align: center;">ยังไม่มีข้อมูลสถิติ</div>';
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            document.getElementById('statsList').innerHTML = '';
-        });
-    }
-    */
     // สคริปต์ควบคุมการเปิด-ปิดรูปภาพขยาย (Lightbox)
     function openLightbox(imgSrc) {
         const lightbox = document.getElementById('lightboxModal');
