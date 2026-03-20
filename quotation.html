@@ -330,8 +330,76 @@
         function closeDetailBtn() { document.getElementById('detailModal').style.display = 'none'; }
 
         function saveToDatabase() {
-            // โค้ด fetch scriptURL เดิมของคุณ (ใส่ข้อมูล Token และตรวจสอบชื่อ/เบอร์โทร)
-            alert('ระบบกำลังบันทึกข้อมูลและแจ้งเตือนเจ้าหน้าที่...');
+                    // 1. ระบุ URL ของ Web App (ตรวจสอบให้ตรงกับใน Google Apps Script)
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbzkOehJBDiiH7UwsMw1PpRCd__mZxVMQPrpswaEKKM6HLUe4AObXshAOCeQWDBrHJnEAQ/exec';
+        
+            const name = document.getElementById('cusName').value.trim();
+            const phone = document.getElementById('cusPhone').value.trim();
+            const note = document.getElementById('userNote').value.trim();
+            
+            // ตรวจสอบข้อมูลเบื้องต้น
+            if (!name || !phone) {
+                alert("⚠️ กรุณากรอก 'ชื่อผู้ติดต่อ' และ 'เบอร์โทรศัพท์' ให้ครบถ้วนครับ");
+                return;
+            }
+        
+            // เตรียมรายการสินค้าจากตะกร้า (Cart)
+            let items = [];
+            let total = 0;
+            products.forEach(p => {
+                const qty = cart[p.id] || 0;
+                if (qty > 0) {
+                    items.push({ name: p.name, qty: qty, price: p.price });
+                    total += p.price * qty;
+                }
+            });
+        
+            if (items.length === 0) {
+                alert("⚠️ กรุณาเลือกอุปกรณ์อย่างน้อย 1 รายการก่อนบันทึกครับ");
+                return;
+            }
+        
+            // เตรียม Data ที่จะส่ง (ไม่ต้องใช้ Token สำหรับการบันทึกใหม่ ตามโค้ด .gs ของคุณ)
+            const data = { 
+                name: name, 
+                phone: phone, 
+                note: note, 
+                items: items, 
+                total_price: total 
+            };
+        
+            // เปลี่ยนสถานะปุ่มเพื่อป้องกันการกดซ้ำ
+            const saveBtn = document.querySelector('.btn-save');
+            const originalText = saveBtn.innerText;
+            saveBtn.innerText = "⏳ กำลังบันทึกข้อมูล...";
+            saveBtn.disabled = true;
+        
+            // ส่งข้อมูลแบบ POST
+            fetch(scriptURL, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                mode: 'no-cors' // สำคัญเพื่อให้ทำงานกับ Google Script ได้โดยไม่ติด CORS
+            })
+            .then(() => {
+                alert("✅ บันทึกข้อมูลใบเสนอราคาเรียบร้อยแล้ว!\nเจ้าหน้าที่จะติดต่อกลับหาคุณโดยเร็วที่สุดครับ");
+                
+                // ล้างข้อมูลหลังบันทึกสำเร็จ
+                cart = {}; 
+                document.getElementById('cusName').value = '';
+                document.getElementById('cusPhone').value = '';
+                document.getElementById('userNote').value = '';
+                renderGrid();
+                renderCart();
+                
+                saveBtn.innerText = originalText;
+                saveBtn.disabled = false;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("❌ เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์ กรุณาลองใหม่อีกครั้ง");
+                saveBtn.innerText = originalText;
+                saveBtn.disabled = false;
+            });
         }
 
         renderGrid();
