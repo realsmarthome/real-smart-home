@@ -265,21 +265,56 @@
     <script>
         // ข้อมูลสินค้า
         const products = [
-            { id: 1, name: "สวิตช์ไฟอัจฉริยะ (3 ช่อง)", price: 790 },
-            { id: 2, name: "สวิตช์ไฟอัจฉริยะ (2 ช่อง)", price: 740 },
-            { id: 3, name: "สวิตช์ไฟอัจฉริยะ (1 ช่อง)", price: 690 },
-            { id: 4, name: "เซ็นเซอร์ประตู/หน้าต่าง", price: 320 },
-            { id: 5, name: "เซ็นเซอร์จับความเคลื่อนไหว", price: 340 },
-            { id: 6, name: "ระบบไฟห้องน้ำอัตโนมัติ", price: 1290 },
-            { id: 7, name: "ระบบควบคุมแอร์", price: 550 },
-            { id: 8, name: "ชุดควบคุมประตูรั้วรีโมท", price: 1100 },
-            { id: 9, name: "กล้องวงจรปิด 64GB", price: 1890 },
-            { id: 10, name: "เซ็นเซอร์ตรวจจับการมีอยู่ (Presence)", price: 950 },
-            { id: 11, name: "สมาร์ทปลั๊กฝังผนัง (2 ช่อง)", price: 950 },
-            { id: 12, name: "สมาร์ทปลั๊ก (เสียบผนัง)", price: 590 },
-            { id: 13, name: "Zigbee Gateway", price: 1890 },
-            { id: 14, name: "Zigbee Repeater", price: 590 },
-            { id: 15, name: "Digital Door Lock", price: 4900 }
+            // --- หมวดหมู่: เซ็นเซอร์ ---
+    { id: 1, name: "Presence Sensor (Zigbee)", desc: "เซ็นเซอร์ตรวจจับการมีอยู่", price: 1150, category: "sensor" },
+    { id: 2, name: "Door/Window Sensor (Zigbee)", desc: "เซ็นเซอร์ตรวจจับการ เปิด-ปิด ประตู/หน้าต่าง", price: 340, category: "sensor" },
+    { id: 3, name: "Motion Sensor (Zigbee)", desc: "เซ็นเซอร์ตรวจจับการเคลื่อนไหว", price: 340, category: "sensor" },
+    { id: 4, name: "Smoke Detector (Built-in Siren)", desc: "เซ็นเซอร์ตรวจจับควันไฟ พร้อมลำโพงไซเรนในตัว", price: 680, category: "sensor" },
+    { id: 5, name: "Water Leak Sensor", desc: "เซ็นเซอร์ตรวจจับน้ำรั่ว", price: 550, category: "sensor" },
+    { id: 6, name: "Fall Detection Sensor (Zigbee)", desc: "เซ็นเซอร์ตรวจจับการล้ม", price: 2500, category: "sensor" },
+    { id: 7, name: "Temp/Humidity Sensor (LCD Screen)", desc: "เซ็นเซอร์วัดอุณหภูมิและความชื้น", price: 490, category: "sensor" },
+
+    // --- หมวดหมู่: เต้ารับ ---
+    { id: 8, name: "Smart Wall Socket 2 Gang", desc: "เต้ารับไฟอัจฉริยะแบบฝังผนัง 2 ช่อง", price: 750, category: "socket" },
+    { id: 12, name: "Smart Wall Socket (Power Monitoring)", desc: "เต้ารับอัจฉริยะ 2 ช่อง (วัดการใช้ไฟฟ้าได้)", price: 940, category: "socket" },
+    { id: 14, name: "Smart Plug 1 Gang", desc: "เต้ารับไฟอัจฉริยะแบบไม่ฝังผนัง 1 ช่อง", price: 350, category: "socket" },
+
+    // --- หมวดหมู่: ประตู ---
+    { id: 21, name: "Digital Door Lock (Swing) - Hafele", desc: "กลอนประตูดิจิทัล (บานสวิง) ยี่ห้อ Hafele", price: 13900, category: "door" },
+    { id: 22, name: "Digital Door Lock (Sliding Door)", desc: "กลอนประตูดิจิทัล (สำหรับบานเลื่อน)", price: 4500, category: "door" },
+    { id: 25, name: "Digital Door Lock (Swing Door)", desc: "กลอนประตูดิจิทัล (บานสวิง)", price: 4500, category: "door" },
+
+    // --- หมวดหมู่: สวิตช์ไฟ ---
+    { id: 32, name: "Smart Switch 1 Gang (Zigbee)", desc: "สวิตช์ไฟอัจฉริยะ 1 ช่อง", price: 690, category: "switch" },
+    { id: 33, name: "Smart Switch 2 Gang (Zigbee)", desc: "สวิตช์ไฟอัจฉริยะ 2 ช่อง", price: 740, category: "switch" },
+    { id: 34, name: "Smart Switch 3 Gang (Zigbee)", desc: "สวิตช์ไฟอัจฉริยะ 3 ช่อง", price: 790, category: "switch" },
+    { id: 35, name: "Smart Switch 2 Gang (EU Type)", desc: "สวิตช์ไฟอัจฉริยะ 2 ช่อง แบบ EU", price: 840, category: "switch" },
+    { id: 36, name: "Smart Switch 3 Gang (EU Type)", desc: "สวิตช์ไฟอัจฉริยะ 3 ช่อง แบบ EU", price: 890, category: "switch" },
+    { id: 37, name: "Smart Switch 1 Gang (EU Type)", desc: "สวิตช์ไฟอัจฉริยะ 1 ช่อง แบบ EU", price: 790, category: "switch" },
+    { id: 38, name: "Dimmer Smart Switch 1 Gang", desc: "สวิตช์หรี่ไฟอัจฉริยะ 1 ช่อง", price: 690, category: "switch" },
+    { id: 39, name: "Dimmer Smart Switch 2 Gang", desc: "สวิตช์หรี่ไฟอัจฉริยะ 2 ช่อง", price: 740, category: "switch" },
+    { id: 40, name: "Dimmer Smart Switch 3 Gang", desc: "สวิตช์หรี่ไฟอัจฉริยะ 3 ช่อง", price: 790, category: "switch" },
+    { id: 41, name: "Push Button Smart Switch 2 Gang", desc: "สวิตช์อัจฉริยะแบบปุ่มกด 2 ช่อง", price: 870, category: "switch" },
+    { id: 42, name: "Push Button Smart Switch 3 Gang", desc: "สวิตช์อัจฉริยะแบบปุ่มกด 3 ช่อง", price: 920, category: "switch" },
+    { id: 43, name: "Push Button Smart Switch 1 Gang", desc: "สวิตช์อัจฉริยะแบบปุ่มกด 1 ช่อง", price: 740, category: "switch" },
+
+    // --- หมวดหมู่: กล้องวงจรปิด ---
+    { id: 47, name: "Indoor Wireless Security Camera", desc: "กล้องวงจรปิดอัจฉริยะไร้สายภายใน", price: 1390, category: "camera" },
+    { id: 48, name: "Outdoor Wireless Security Camera", desc: "กล้องวงจรปิดอัจฉริยะไร้สายภายนอก", price: 1590, category: "camera" },
+    { id: 49, name: "Outdoor Camera (Bullet)", desc: "กล้องวงจรปิดไร้สายภายนอกทรง Bullet", price: 1190, category: "camera" },
+    { id: 50, name: "Wireless Camera (Dome)", desc: "กล้องวงจรปิดอัจฉริยะไร้สายทรง Dome", price: 1790, category: "camera" },
+
+    // --- หมวดหมู่: อื่นๆ ---
+    { id: 51, name: "Google Home Smart Speaker", desc: "ลำโพงสั่งงานด้วยเสียง Google", price: 2900, category: "speaker" },
+    { id: 52, name: "Amazon Echo Dot 5th Gen", desc: "ลำโพงสั่งงานด้วยเสียง Alexa", price: 2290, category: "speaker" },
+    { id: 53, name: "10.1-inch Smart Display", desc: "หน้าจอควบคุมระบบ ขนาด 10.1 นิ้ว", price: 14300, category: "display" },
+    { id: 54, name: "4-inch Smart Display", desc: "หน้าจอควบคุมระบบ ขนาด 4 นิ้ว", price: 4900, category: "display" },
+    { id: 55, name: "Zigbee Repeater", desc: "อุปกรณ์ขยายสัญญาณ Zigbee", price: 550, category: "repeater" },
+    { id: 56, name: "Zigbee Repeater (Antenna)", desc: "อุปกรณ์ขยายสัญญาณ พร้อมเสาสัญญาณ", price: 580, category: "repeater" },
+    { id: 57, name: "Mini Smart Gateway", desc: "อุปกรณ์ศูนย์กลางควบคุมระบบ (Mini)", price: 890, category: "gateway" },
+    { id: 58, name: "Smart IR Remote", desc: "อุปกรณ์ควบคุมเครื่องใช้ไฟฟ้าผ่าน IR", price: 550, category: "ir" },
+    { id: 59, name: "Pro Smart Gateway", desc: "อุปกรณ์ศูนย์กลางควบคุมระบบ (Pro)", price: 1850, category: "gateway" },
+    { id: 60, name: "Standard Smart Gateway", desc: "อุปกรณ์ศูนย์กลางควบคุมระบบ (Standard)", price: 1290, category: "gateway" }
         ];
 
         let cart = {};
