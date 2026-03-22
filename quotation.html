@@ -193,58 +193,58 @@
         // รายการสินค้า 42 รายการ (ตัดราคาต้นทุนออก)
         const products = [
             // --- หมวดหมู่: เซ็นเซอร์ (7 รายการ) ---
-    { id: 1, name: "Presence Sensor (Zigbee)", desc: "เซ็นเซอร์ตรวจจับการมีอยู่", price: 1150, category: "sensor" },
-    { id: 2, name: "Door/Window Sensor (Zigbee)", desc: "เซ็นเซอร์ตรวจจับการ เปิด-ปิด ประตู/หน้าต่าง", price: 340, category: "sensor" },
-    { id: 3, name: "Motion Sensor (Zigbee)", desc: "เซ็นเซอร์ตรวจจับการเคลื่อนไหว", price: 340, category: "sensor" },
-    { id: 4, name: "Smoke Detector with Siren", desc: "เซ็นเซอร์ตรวจจับควันไฟ พร้อมลำโพงไซเรนในตัว", price: 680, category: "sensor" },
-    { id: 5, name: "Water Leak Sensor", desc: "เซ็นเซอร์ตรวจจับน้ำรั่ว", price: 550, category: "sensor" },
-    { id: 6, name: "Fall Detection Sensor (Zigbee)", desc: "เซ็นเซอร์ตรวจจับการล้ม", price: 2500, category: "sensor" },
-    { id: 7, name: "Temp/Humid Sensor with LCD", desc: "เซ็นเซอร์วัดอุณหภูมิและความชื้นหน้าจอ LCD", price: 490, category: "sensor" },
-
-    // --- หมวดหมู่: เต้ารับ (3 รายการ) ---
-    { id: 8, name: "Smart Wall Socket 2 Gang", desc: "เต้ารับไฟอัจฉริยะแบบฝังผนัง 2 ช่อง", price: 750, category: "socket" },
-    { id: 12, name: "Smart Wall Socket 2 Gang (PM)", desc: "เต้ารับอัจฉริยะ 2 ช่อง (วัดการใช้ไฟฟ้าได้)", price: 940, category: "socket" },
-    { id: 14, name: "Smart Plug 1 Gang", desc: "เต้ารับไฟอัจฉริยะแบบไม่ฝังผนัง 1 ช่อง", price: 350, category: "socket" },
-
-    // --- หมวดหมู่: ประตู (3 รายการ) ---
-    { id: 21, name: "Digital Door Lock (Swing) - Hafele", desc: "กลอนประตูดิจิทัล (บานสวิง) Hafele", price: 13900, category: "door" },
-    { id: 22, name: "Digital Door Lock (Sliding Door)", desc: "กลอนประตูดิจิทัล (สำหรับบานเลื่อน)", price: 4500, category: "door" },
-    { id: 25, name: "Digital Door Lock (Swing Door)", desc: "กลอนประตูดิจิทัล (บานสวิง)", price: 4500, category: "door" },
-
-    // --- หมวดหมู่: สวิตช์ไฟ (15 รายการ) ---
-    { id: 32, name: "Smart Switch 1 Gang (Zigbee)", desc: "สวิตช์ไฟอัจฉริยะ 1 ช่อง", price: 690, category: "switch" },
-    { id: 33, name: "Smart Switch 2 Gang (Zigbee)", desc: "สวิตช์ไฟอัจฉริยะ 2 ช่อง", price: 740, category: "switch" },
-    { id: 34, name: "Smart Switch 3 Gang (Zigbee)", desc: "สวิตช์ไฟอัจฉริยะ 3 ช่อง", price: 790, category: "switch" },
-    { id: 35, name: "Smart Switch 2 Gang (EU Type)", desc: "สวิตช์ไฟอัจฉริยะ 2 ช่อง (ทรงยุโรป)", price: 840, category: "switch" },
-    { id: 36, name: "Smart Switch 3 Gang (EU Type)", desc: "สวิตช์ไฟอัจฉริยะ 3 ช่อง (ทรงยุโรป)", price: 890, category: "switch" },
-    { id: 37, name: "Smart Switch 1 Gang (EU Type)", desc: "สวิตช์ไฟอัจฉริยะ 1 ช่อง (ทรงยุโรป)", price: 790, category: "switch" },
-    { id: 38, name: "Dimmer Smart Switch 1 Gang", desc: "สวิตช์หรี่ไฟอัจฉริยะ 1 ช่อง", price: 690, category: "switch" },
-    { id: 39, name: "Dimmer Smart Switch 2 Gang", desc: "สวิตช์หรี่ไฟอัจฉริยะ 2 ช่อง", price: 740, category: "switch" },
-    { id: 40, name: "Dimmer Smart Switch 3 Gang", desc: "สวิตช์หรี่ไฟอัจฉริยะ 3 ช่อง", price: 790, category: "switch" },
-    { id: 41, name: "Push Button Smart Switch 2 Gang", desc: "สวิตช์ปุ่มกดอัจฉริยะ 2 ช่อง", price: 870, category: "switch" },
-    { id: 42, name: "Push Button Smart Switch 3 Gang", desc: "สวิตช์ปุ่มกดอัจฉริยะ 3 ช่อง", price: 920, category: "switch" },
-    { id: 43, name: "Push Button Smart Switch 1 Gang", desc: "สวิตช์ปุ่มกดอัจฉริยะ 1 ช่อง", price: 740, category: "switch" },
-    { id: 44, name: "Push Button Smart Switch 3 Gang (EU)", desc: "สวิตช์ปุ่มกด 3 ช่อง (ทรงยุโรป)", price: 940, category: "switch" },
-    { id: 45, name: "Push Button Smart Switch 1 Gang (EU)", desc: "สวิตช์ปุ่มกด 1 ช่อง (ทรงยุโรป)", price: 840, category: "switch" },
-    { id: 46, name: "Push Button Smart Switch 2 Gang (EU)", desc: "สวิตช์ปุ่มกด 2 ช่อง (ทรงยุโรป)", price: 890, category: "switch" },
-
-    // --- หมวดหมู่: กล้องวงจรปิด (4 รายการ) ---
-    { id: 47, name: "Smart Indoor Security Camera", desc: "กล้องวงจรปิดอัจฉริยะไร้สายภายใน", price: 1390, category: "camera" },
-    { id: 48, name: "Smart Outdoor Security Camera", desc: "กล้องวงจรปิดอัจฉริยะไร้สายภายนอก", price: 1590, category: "camera" },
-    { id: 49, name: "Smart Outdoor Camera (Bullet)", desc: "กล้องวงจรปิดภายนอกทรง Bullet", price: 1190, category: "camera" },
-    { id: 50, name: "Smart Security Camera (Dome)", desc: "กล้องวงจรปิดอัจฉริยะไร้สายทรง Dome", price: 1790, category: "camera" },
-
-    // --- หมวดหมู่: อื่นๆ (10 รายการ) ---
-    { id: 51, name: "Google Home Smart Speaker", desc: "ลำโพงสั่งงานด้วยเสียง Google", price: 2900, category: "speaker" },
-    { id: 52, name: "Amazon Echo Dot 5th Gen", desc: "ลำโพงสั่งงานด้วยเสียง Alexa", price: 2290, category: "speaker" },
-    { id: 53, name: "10.1-inch Smart Display (Alexa)", desc: "หน้าจอควบคุมระบบ ขนาด 10.1 นิ้ว", price: 14300, category: "display" },
-    { id: 54, name: "4-inch Smart Display (Alexa)", desc: "หน้าจอควบคุมระบบ ขนาด 4 นิ้ว", price: 4900, category: "display" },
-    { id: 55, name: "Zigbee Repeater", desc: "อุปกรณ์ขยายสัญญาณ Zigbee", price: 550, category: "repeater" },
-    { id: 56, name: "Zigbee Repeater (Ext. Antenna)", desc: "อุปกรณ์ขยายสัญญาณ พร้อมเสาสัญญาณ", price: 580, category: "repeater" },
-    { id: 57, name: "Mini Smart Gateway (Zigbee)", desc: "อุปกรณ์ศูนย์กลางควบคุม (Mini)", price: 890, category: "gateway" },
-    { id: 58, name: "Smart IR Remote", desc: "อุปกรณ์ควบคุมเครื่องใช้ไฟฟ้าผ่าน IR", price: 550, category: "ir" },
-    { id: 59, name: "Pro Smart Gateway (Zigbee)", desc: "อุปกรณ์ศูนย์กลางควบคุม (Pro)", price: 1850, category: "gateway" },
-    { id: 60, name: "Standard Smart Gateway (Zigbee)", desc: "อุปกรณ์ศูนย์กลางควบคุม (Standard)", price: 1290, category: "gateway" }
+            { id: 11, name: "Presence Sensor (Zigbee)", desc: "เซ็นเซอร์ตรวจจับการมีอยู่", price: 1150, category: "sensor" },
+            { id: 12, name: "Door/Window Sensor (Zigbee)", desc: "เซ็นเซอร์ตรวจจับการ เปิด-ปิด ประตู/หน้าต่าง", price: 340, category: "sensor" },
+            { id: 13, name: "Motion Sensor (Zigbee)", desc: "เซ็นเซอร์ตรวจจับการเคลื่อนไหว", price: 340, category: "sensor" },
+            { id: 14, name: "Smoke Detector with Siren", desc: "เซ็นเซอร์ตรวจจับควันไฟ พร้อมลำโพงไซเรนในตัว", price: 680, category: "sensor" },
+            { id: 15, name: "Water Leak Sensor", desc: "เซ็นเซอร์ตรวจจับน้ำรั่ว", price: 550, category: "sensor" },
+            { id: 16, name: "Fall Detection Sensor (Zigbee)", desc: "เซ็นเซอร์ตรวจจับการล้ม", price: 2500, category: "sensor" },
+            { id: 17, name: "Temp/Humid Sensor with LCD", desc: "เซ็นเซอร์วัดอุณหภูมิและความชื้นหน้าจอ LCD", price: 490, category: "sensor" },
+        
+            // --- หมวดหมู่: เต้ารับ (3 รายการ) ---
+            { id: 21, name: "Smart Wall Socket 2 Gang", desc: "เต้ารับไฟอัจฉริยะแบบฝังผนัง 2 ช่อง", price: 750, category: "socket" },
+            { id: 22, name: "Smart Wall Socket 2 Gang (PM)", desc: "เต้ารับอัจฉริยะ 2 ช่อง (วัดการใช้ไฟฟ้าได้)", price: 940, category: "socket" },
+            { id: 23, name: "Smart Plug 1 Gang", desc: "เต้ารับไฟอัจฉริยะแบบไม่ฝังผนัง 1 ช่อง", price: 350, category: "socket" },
+        
+            // --- หมวดหมู่: ประตู (3 รายการ) ---
+            { id: 31, name: "Digital Door Lock (Swing) - Hafele", desc: "กลอนประตูดิจิทัล (บานสวิง) Hafele", price: 13900, category: "door" },
+            { id: 32, name: "Digital Door Lock (Sliding Door)", desc: "กลอนประตูดิจิทัล (สำหรับบานเลื่อน)", price: 4500, category: "door" },
+            { id: 33, name: "Digital Door Lock (Swing Door)", desc: "กลอนประตูดิจิทัล (บานสวิง)", price: 4500, category: "door" },
+        
+            // --- หมวดหมู่: สวิตช์ไฟ (15 รายการ) ---
+            { id: 401, name: "Smart Switch 1 Gang (Zigbee)", desc: "สวิตช์ไฟอัจฉริยะ 1 ช่อง", price: 690, category: "switch" },
+            { id: 402, name: "Smart Switch 2 Gang (Zigbee)", desc: "สวิตช์ไฟอัจฉริยะ 2 ช่อง", price: 740, category: "switch" },
+            { id: 403, name: "Smart Switch 3 Gang (Zigbee)", desc: "สวิตช์ไฟอัจฉริยะ 3 ช่อง", price: 790, category: "switch" },
+            { id: 404, name: "Smart Switch 2 Gang (EU Type)", desc: "สวิตช์ไฟอัจฉริยะ 2 ช่อง (ทรงยุโรป)", price: 840, category: "switch" },
+            { id: 405, name: "Smart Switch 3 Gang (EU Type)", desc: "สวิตช์ไฟอัจฉริยะ 3 ช่อง (ทรงยุโรป)", price: 890, category: "switch" },
+            { id: 406, name: "Smart Switch 1 Gang (EU Type)", desc: "สวิตช์ไฟอัจฉริยะ 1 ช่อง (ทรงยุโรป)", price: 790, category: "switch" },
+            { id: 407, name: "Dimmer Smart Switch 1 Gang", desc: "สวิตช์หรี่ไฟอัจฉริยะ 1 ช่อง", price: 690, category: "switch" },
+            { id: 408, name: "Dimmer Smart Switch 2 Gang", desc: "สวิตช์หรี่ไฟอัจฉริยะ 2 ช่อง", price: 740, category: "switch" },
+            { id: 409, name: "Dimmer Smart Switch 3 Gang", desc: "สวิตช์หรี่ไฟอัจฉริยะ 3 ช่อง", price: 790, category: "switch" },
+            { id: 410, name: "Push Button Smart Switch 2 Gang", desc: "สวิตช์ปุ่มกดอัจฉริยะ 2 ช่อง", price: 870, category: "switch" },
+            { id: 411, name: "Push Button Smart Switch 3 Gang", desc: "สวิตช์ปุ่มกดอัจฉริยะ 3 ช่อง", price: 920, category: "switch" },
+            { id: 412, name: "Push Button Smart Switch 1 Gang", desc: "สวิตช์ปุ่มกดอัจฉริยะ 1 ช่อง", price: 740, category: "switch" },
+            { id: 413, name: "Push Button Smart Switch 3 Gang (EU)", desc: "สวิตช์ปุ่มกด 3 ช่อง (ทรงยุโรป)", price: 940, category: "switch" },
+            { id: 414, name: "Push Button Smart Switch 1 Gang (EU)", desc: "สวิตช์ปุ่มกด 1 ช่อง (ทรงยุโรป)", price: 840, category: "switch" },
+            { id: 415, name: "Push Button Smart Switch 2 Gang (EU)", desc: "สวิตช์ปุ่มกด 2 ช่อง (ทรงยุโรป)", price: 890, category: "switch" },
+        
+            // --- หมวดหมู่: กล้องวงจรปิด (4 รายการ) ---
+            { id: 51, name: "Smart Indoor Security Camera", desc: "กล้องวงจรปิดอัจฉริยะไร้สายภายใน", price: 1390, category: "camera" },
+            { id: 52, name: "Smart Outdoor Security Camera", desc: "กล้องวงจรปิดอัจฉริยะไร้สายภายนอก", price: 1590, category: "camera" },
+            { id: 53, name: "Smart Outdoor Camera (Bullet)", desc: "กล้องวงจรปิดภายนอกทรง Bullet", price: 1190, category: "camera" },
+            { id: 54, name: "Smart Security Camera (Dome)", desc: "กล้องวงจรปิดอัจฉริยะไร้สายทรง Dome", price: 1790, category: "camera" },
+        
+            // --- หมวดหมู่: อื่นๆ (10 รายการ) ---
+            { id: 601, name: "Google Home Smart Speaker", desc: "ลำโพงสั่งงานด้วยเสียง Google", price: 2900, category: "speaker" },
+            { id: 602, name: "Amazon Echo Dot 5th Gen", desc: "ลำโพงสั่งงานด้วยเสียง Alexa", price: 2290, category: "speaker" },
+            { id: 603, name: "10.1-inch Smart Display (Alexa)", desc: "หน้าจอควบคุมระบบ ขนาด 10.1 นิ้ว", price: 14300, category: "display" },
+            { id: 604, name: "4-inch Smart Display (Alexa)", desc: "หน้าจอควบคุมระบบ ขนาด 4 นิ้ว", price: 4900, category: "display" },
+            { id: 605, name: "Zigbee Repeater", desc: "อุปกรณ์ขยายสัญญาณ Zigbee", price: 550, category: "repeater" },
+            { id: 606, name: "Zigbee Repeater (Ext. Antenna)", desc: "อุปกรณ์ขยายสัญญาณ พร้อมเสาสัญญาณ", price: 580, category: "repeater" },
+            { id: 607, name: "Mini Smart Gateway (Zigbee)", desc: "อุปกรณ์ศูนย์กลางควบคุม (Mini)", price: 890, category: "gateway" },
+            { id: 608, name: "Smart IR Remote", desc: "อุปกรณ์ควบคุมเครื่องใช้ไฟฟ้าผ่าน IR", price: 550, category: "ir" },
+            { id: 609, name: "Pro Smart Gateway (Zigbee)", desc: "อุปกรณ์ศูนย์กลางควบคุม (Pro)", price: 1850, category: "gateway" },
+            { id: 610, name: "Standard Smart Gateway (Zigbee)", desc: "อุปกรณ์ศูนย์กลางควบคุม (Standard)", price: 1290, category: "gateway" }
         ];
 
         let cart = {};
@@ -278,7 +278,9 @@
         function updateQty(id, delta) {
             cart[id] = (cart[id] || 0) + delta;
             if (cart[id] < 0) cart[id] = 0;
-            renderGrid(document.querySelector('.filter-btn.active').getAttribute('onclick').split("'")[1]);
+            // รักษาฟิลเตอร์ปัจจุบัน
+            const activeFilter = document.querySelector('.filter-btn.active').getAttribute('onclick').split("'")[1];
+            renderGrid(activeFilter);
             renderCart();
         }
 
@@ -317,39 +319,49 @@
             renderGrid(cat);
         }
 
-        // Modal Functions
+        // --- แก้ไขให้แสดงรูปภาพจริงจาก p.img ---
         function openDetail(id) {
             const p = products.find(prod => prod.id === id);
+            if(!p) return;
+
             document.getElementById('modalName').innerText = p.name;
             document.getElementById('modalDesc').innerText = p.desc;
             document.getElementById('modalPrice').innerText = "ราคา: ฿" + p.price.toLocaleString();
-            document.getElementById('modalImg').src = "https://placehold.co/400x300/1a1a1a/00d2ff?text=" + p.name;
+            
+            // ใช้รูปจาก path ที่ระบุ ถ้าไม่มีให้ใช้รูป Default
+            document.getElementById('modalImg').src = p.img || "images/products/no-image.jpg";
             document.getElementById('detailModal').style.display = 'flex';
         }
+
         function closeDetail(e) { if(e.target.id === 'detailModal') closeDetailBtn(); }
         function closeDetailBtn() { document.getElementById('detailModal').style.display = 'none'; }
 
+        // --- ฟังก์ชันส่งข้อมูลที่สำคัญที่สุด: ส่ง ID ไปด้วย ---
         function saveToDatabase() {
-                    // 1. ระบุ URL ของ Web App (ตรวจสอบให้ตรงกับใน Google Apps Script)
             const scriptURL = 'https://script.google.com/macros/s/AKfycbzkOehJBDiiH7UwsMw1PpRCd__mZxVMQPrpswaEKKM6HLUe4AObXshAOCeQWDBrHJnEAQ/exec';
         
             const name = document.getElementById('cusName').value.trim();
             const phone = document.getElementById('cusPhone').value.trim();
             const note = document.getElementById('userNote').value.trim();
             
-            // ตรวจสอบข้อมูลเบื้องต้น
             if (!name || !phone) {
                 alert("⚠️ กรุณากรอก 'ชื่อผู้ติดต่อ' และ 'เบอร์โทรศัพท์' ให้ครบถ้วนครับ");
                 return;
             }
         
-            // เตรียมรายการสินค้าจากตะกร้า (Cart)
             let items = [];
             let total = 0;
+
             products.forEach(p => {
                 const qty = cart[p.id] || 0;
                 if (qty > 0) {
-                    items.push({ name: p.name, qty: qty, price: p.price });
+                    // *** สำคัญ: ต้องแนบ p.id ไปด้วยเพื่อให้หลังบ้านดึงต้นทุนได้ ***
+                    items.push({ 
+                        id: p.id, 
+                        name: p.name, 
+                        qty: qty, 
+                        price: p.price 
+                    });
                     total += p.price * qty;
                 }
             });
@@ -359,7 +371,6 @@
                 return;
             }
         
-            // เตรียม Data ที่จะส่ง (ไม่ต้องใช้ Token สำหรับการบันทึกใหม่ ตามโค้ด .gs ของคุณ)
             const data = { 
                 name: name, 
                 phone: phone, 
@@ -368,36 +379,31 @@
                 total_price: total 
             };
         
-            // เปลี่ยนสถานะปุ่มเพื่อป้องกันการกดซ้ำ
             const saveBtn = document.querySelector('.btn-save');
-            const originalText = saveBtn.innerText;
             saveBtn.innerText = "⏳ กำลังบันทึกข้อมูล...";
             saveBtn.disabled = true;
         
-            // ส่งข้อมูลแบบ POST
             fetch(scriptURL, {
                 method: 'POST',
                 body: JSON.stringify(data),
-                mode: 'no-cors' // สำคัญเพื่อให้ทำงานกับ Google Script ได้โดยไม่ติด CORS
+                mode: 'no-cors' 
             })
             .then(() => {
                 alert("✅ บันทึกข้อมูลใบเสนอราคาเรียบร้อยแล้ว!\nเจ้าหน้าที่จะติดต่อกลับหาคุณโดยเร็วที่สุดครับ");
                 
-                // ล้างข้อมูลหลังบันทึกสำเร็จ
                 cart = {}; 
                 document.getElementById('cusName').value = '';
                 document.getElementById('cusPhone').value = '';
                 document.getElementById('userNote').value = '';
-                renderGrid();
+                renderGrid('all');
                 renderCart();
                 
-                saveBtn.innerText = originalText;
+                saveBtn.innerText = "บันทึกและส่งข้อมูลให้เจ้าหน้าที่";
                 saveBtn.disabled = false;
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert("❌ เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์ กรุณาลองใหม่อีกครั้ง");
-                saveBtn.innerText = originalText;
+                alert("❌ เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์");
                 saveBtn.disabled = false;
             });
         }
